@@ -36,7 +36,7 @@ export default function Navbar() {
             <Link href="/services" className="text-gray-700 hover:text-[#00BFA6] font-medium">
               Services
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#00BFA6] font-medium">
+            <Link href='/a-propos' className="text-gray-700 hover:text-[#00BFA6] font-medium">
               À propos
             </Link>
           </div>
@@ -93,7 +93,7 @@ export default function Navbar() {
             <Link href="/services" className="text-gray-700 hover:text-[#00BFA6]">
               Services
             </Link>
-            <Link href="/about" className="text-gray-700 hover:text-[#00BFA6]">
+            <Link href='/a-propos' className="text-gray-700 hover:text-[#00BFA6]">
               À propos
             </Link>
             <Link

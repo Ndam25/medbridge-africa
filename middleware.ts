@@ -1,28 +1,14 @@
-// middleware.ts
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-
-const locales = ['fr', 'en']
-const defaultLocale = 'fr'
-
-// 1. Détecte la langue dans le chemin (si non présente) et redirige
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  
-  // Vérifie si le chemin commence par une locale supportée
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  )
-
-  if (pathnameHasLocale) return
-
-  // 2. Si aucune locale n'est présente, rediriger vers la locale par défaut
-  request.nextUrl.pathname = `/${defaultLocale}${pathname}`
-  return NextResponse.redirect(request.nextUrl)
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  if (/^\/[^/]+\.html$/.test(pathname)) return NextResponse.next();
+  const m = pathname.match(/^\/(fr|en)\/([^/]+\.html)$/);
+  if (m) return NextResponse.rewrite(new URL(`/${m[2]}`, req.url));
+  return NextResponse.next();
 }
 
 export const config = {
-  // Ignore les chemins API, les assets, les fichiers statiques, et /admin
-  matcher: ['/((?!api|_next/static|_next/image|images|favicon.ico|admin).*)'],
-}
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|txt|json|map)).*)"],
+};

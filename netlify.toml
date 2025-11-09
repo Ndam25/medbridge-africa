@@ -4,3 +4,8 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+[[redirects]]
+  from = "/api/eligibility"
+  to   = "/.netlify/functions/eligibility"
+  status = 200
+  force = true

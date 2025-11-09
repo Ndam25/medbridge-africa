@@ -1,1 +1,1 @@
-export { default } from "../se-connecter/page";
+export { default } from '../se-connecter/page';

@@ -1,1 +1,1 @@
-export { default } from "../a-propos/page";
+export { default } from '../a-propos/page';

@@ -73,7 +73,7 @@ export default function EligibilityPage({ params }: { params: { lang: Lang } }) 
     <main className="max-w-2xl mx-auto px-4 py-12">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">{L.title}</h1>
-        <a href={//eligibility} className="text-sm underline">
+        <a href={`/${other}/eligibility`} className="text-sm underline">
           {other==='fr'?'Français':'English'}
         </a>
       </div>

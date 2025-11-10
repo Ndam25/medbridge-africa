@@ -1,421 +1,172 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MedBridge Africa — Formulaire d'Évaluation</title>
-  <link rel="icon" href="/favicon.ico">
-  <script>
-    const STR = {
-      fr: {
-        brand: "MedBridge Africa",
-        title: "Formulaire d'Évaluation",
-        step: n => `Étape ${n} / 5`,
-        save: "Enregistrer le brouillon",
-        load: "Charger le brouillon",
-        clear: "Effacer le brouillon",
-        prev: "Précédent",
-        next: "Suivant",
-        submit: "Soumettre l'évaluation",
-        export: "Exporter en JSON",
-        print: "Imprimer / PDF",
-        after: "Après soumission, que se passe-t-il ?",
-        afterBullets: [
-          "Vous recevez un e-mail de confirmation avec la synthèse de vos réponses.",
-          "Notre équipe calcule un score de probabilité EB1-A / EB2-NIW et envoie un rapport (PDF) avec recommandations.",
-          "Nous proposons une consultation stratégique (si souhaitée) pour optimiser votre dossier.",
-          "Astuce : vous pouvez utiliser “Enregistrer le brouillon” pour reprendre plus tard, sur le même navigateur."
-        ],
-        s1Title: "1) Profil & Choix du programme",
-        program: "Programme visé",
-        choose: "— choisir —",
-        name: "Nom complet",
-        email: "Email",
-        phone: "Téléphone / WhatsApp",
-        country: "Pays de résidence",
-        field: "Domaine d'expertise (ex. médecine, santé publique, IA…)",
-        s2Title: "2) Académique & Expérience",
-        highest: "Niveau académique le plus élevé",
-        years: "Années d'expérience",
-        summary: "Résumé de parcours (3–5 lignes)",
-        s3Title: "3) Preuves & Réalisations",
-        pubs: "Publications scientifiques (nombre estimé)",
-        cites: "Citations (Google Scholar / Scopus)",
-        awards: "Prix / distinctions (listez brièvement)",
-        reviewing: "Rôles de jury / comité / reviewing",
-        leadership: "Leadership / rôle critique",
-        media: "Médiatisation (articles, interviews, médias — liens si possible)",
-        s4Title: "4) Projet & Objectifs aux États-Unis",
-        sector: "Secteur / Thématique du projet (ex. santé publique, IA médicale, nutrition…)",
-        statecity: "État/Ville ciblé(e) (ex. New York, Texas, DC…)",
-        proj: "Résumé du projet (importance nationale, bénéficiaires, livrables)",
-        lors: "Lettres de recommandation prévues (quantité / émetteurs)",
-        uspartners: "Partenaires US / preuves de faisabilité (MoU, e-mails, LoI, collaborations…)",
-        s5Title: "5) Consentement & Envoi",
-        consent: "J'accepte que mes données soient traitées pour l'évaluation.",
-        langSwitch: "English",
-        openReport: "Voir un exemple de rapport",
-        openReportShort: "Voir rapport"
-      },
-      en: {
-        brand: "MedBridge Africa",
-        title: "Eligibility Form",
-        step: n => `Step ${n} / 5`,
-        save: "Save draft",
-        load: "Load draft",
-        clear: "Clear draft",
-        prev: "Back",
-        next: "Next",
-        submit: "Submit evaluation",
-        export: "Export JSON",
-        print: "Print / PDF",
-        after: "What happens after submission?",
-        afterBullets: [
-          "You receive a confirmation email with a summary of your answers.",
-          "We compute an indicative EB1-A / EB2-NIW probability score and send a report (PDF) with recommendations.",
-          "We can schedule a strategy consultation (optional) to optimize your case.",
-          "Tip: use “Save draft” to resume later in the same browser."
-        ],
-        s1Title: "1) Profile & Program Choice",
-        program: "Targeted program",
-        choose: "— choose —",
-        name: "Full name",
-        email: "Email",
-        phone: "Phone / WhatsApp",
-        country: "Country of residence",
-        field: "Field of expertise (e.g., medicine, public health, AI…)",
-        s2Title: "2) Academic & Experience",
-        highest: "Highest academic degree",
-        years: "Years of experience",
-        summary: "Profile summary (3–5 lines)",
-        s3Title: "3) Evidence & Achievements",
-        pubs: "Scientific publications (estimated count)",
-        cites: "Citations (Google Scholar / Scopus)",
-        awards: "Awards / distinctions (brief list)",
-        reviewing: "Jury / committee / peer-review roles",
-        leadership: "Leadership / critical role",
-        media: "Media coverage (articles, interviews — links if possible)",
-        s4Title: "4) Project & US Objectives",
-        sector: "Project sector / theme (e.g., public health, medical AI, nutrition…)",
-        statecity: "Target State/City (e.g., New York, Texas, DC…)",
-        proj: "Project summary (national interest, beneficiaries, deliverables)",
-        lors: "Planned recommendation letters (quantity / signers)",
-        uspartners: "US partners / feasibility (MoU, emails, LoI, collaborations…)",
-        s5Title: "5) Consent & Submit",
-        consent: "I consent to data processing for this evaluation.",
-        langSwitch: "Français",
-        openReport: "Open sample report",
-        openReportShort: "Open report"
-      }
-    };
-  </script>
-  <script>
-    const KEY = "mba_eval_draft";
-    let LANG = (new URLSearchParams(location.search).get("lang") || "fr").toLowerCase() === "en" ? "en" : "fr";
-    const $ = sel => document.querySelector(sel);
-    const $$ = sel => document.querySelectorAll(sel);
-
-    function setLang(l){ LANG=l; document.documentElement.lang=l; renderText(); }
-    function renderText(){
-      const S=STR[LANG];
-      $("#brand").textContent=S.brand; $("#title").textContent=S.title; $("#langSwitch").textContent=S.langSwitch;
-      $$(".step-title").forEach((el,i)=>el.textContent=[S.s1Title,S.s2Title,S.s3Title,S.s4Title,S.s5Title][i]);
-      $$(".badge").forEach((el,i)=>el.textContent=S.step(i+1));
-      $("#saveBtn").textContent=S.save; $("#loadBtn").textContent=S.load; $("#clearBtn").textContent=S.clear;
-      $("#prevBtn").textContent=S.prev; $("#nextBtn").textContent=S.next; $("#submitBtn").textContent=S.submit;
-      $("#exportBtn").textContent=S.export; $("#printBtn").textContent=S.print; $("#openReport").textContent=S.openReportShort;
-      $("label[for=program]").textContent=S.program; $("#program option[value='']").textContent=S.choose;
-      $("label[for=full_name]").textContent=S.name; $("label[for=email]").textContent=S.email;
-      $("label[for=phone]").textContent=S.phone; $("label[for=country]").textContent=S.country; $("label[for=field]").textContent=S.field;
-      $("label[for=highest]").textContent=S.highest; $("label[for=years]").textContent=S.years; $("label[for=summary]").textContent=S.summary;
-      $("label[for=pubs]").textContent=S.pubs; $("label[for=cites]").textContent=S.cites; $("label[for=awards]").textContent=S.awards;
-      $("label[for=reviewing]").textContent=S.reviewing; $("label[for=leadership]").textContent=S.leadership; $("label[for=media]").textContent=S.media;
-      $("label[for=sector]").textContent=S.sector; $("label[for=statecity]").textContent=S.statecity; $("label[for=proj]").textContent=S.proj;
-      $("label[for=lors]").textContent=S.lors; $("label[for=uspartners]").textContent=S.uspartners;
-      $("#consentLbl").textContent=S.consent; $("#afterTitle").textContent=S.after;
-      const ul=$("#afterList"); ul.innerHTML=""; S.afterBullets.forEach(t=>{const li=document.createElement("li"); li.textContent=t; ul.appendChild(li);});
-    }
-    function loadDraft(){ try{ return JSON.parse(localStorage.getItem(KEY)||"{}"); }catch{return{}} }
-    function saveDraft(d){ localStorage.setItem(KEY, JSON.stringify(d)); }
-    function clearDraft(){ localStorage.removeItem(KEY); }
-    function getDataFromForm(){
-      const get=id=>(document.getElementById(id)?.value||"").trim();
-      const chk=id=>!!document.getElementById(id)?.checked;
-      return {
-        program:get("program"), full_name:get("full_name"), email:get("email"), phone:get("phone"),
-        country:get("country"), field:get("field"),
-        highest:get("highest"), years:Number(get("years")||0), summary:get("summary"),
-        pubs:Number(get("pubs")||0), cites:Number(get("cites")||0), awards:get("awards"),
-        reviewing:get("reviewing"), leadership:get("leadership"), media:get("media"),
-        sector:get("sector"), statecity:get("statecity"), proj:get("proj"),
-        lors:get("lors"), uspartners:get("uspartners"), consent:chk("consent"), lang:LANG
-      };
-    }
-    function setDataToForm(d={}){
-      const set=(id,val)=>{const el=document.getElementById(id); if(el){ el.value=val??""; }};
-      ["program","full_name","email","phone","country","field","highest","years","summary","pubs","cites","awards","reviewing","leadership","media","sector","statecity","proj","lors","uspartners"].forEach(k=>set(k,d[k]));
-      const c=document.getElementById("consent"); if(c) c.checked=!!d.consent;
-    }
-    function go(step){
-      const steps=[...document.querySelectorAll(".step")];
-      steps.forEach((el,i)=>el.classList.toggle("active", i===step));
-      window.__STEP__=step;
-      const first=steps[step].querySelector("input,select,textarea"); if(first) first.focus();
-      [...document.querySelectorAll(".badge")].forEach((b,i)=>b.classList.toggle("active", i===step));
-    }
-    async function onSubmit(){
-      const d=getDataFromForm();
-      if(!d.full_name || !d.email){ alert(LANG==="fr"?"Nom complet et Email sont requis.":"Full name and Email are required."); return; }
-      saveDraft(d);
-      const notes=`highest=${d.highest}; years=${d.years}; pubs=${d.pubs}; cites=${d.cites}
-awards=${d.awards}; reviewing=${d.reviewing}; leadership=${d.leadership}
-media=${d.media}; sector=${d.sector}; statecity=${d.statecity}
-proj=${(d.proj||"").slice(0,500)}; lors=${d.lors}; uspartners=${d.uspartners}`;
-      const body={ full_name:d.full_name, email:d.email, phone:d.phone, country:d.country, profile:d.field, goals:`Program=${d.program}`, budget:"", notes, source:"EvaluationForm" };
-      try{
-        const r=await fetch("/api/eligibility",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-        const t=await r.text();
-        alert((LANG==="fr"?"Réponse serveur: ":"Server response: ")+t);
-        location.href="/evaluation-report.html?from=submitted";
-      }catch(e){ alert((LANG==="fr"?"Erreur d’envoi: ":"Submit error: ")+e); }
-    }
-    function exportJSON(){
-      const d=getDataFromForm();
-      const blob=new Blob([JSON.stringify(d,null,2)],{type:"application/json"});
-      const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="evaluation_draft.json"; a.click(); URL.revokeObjectURL(a.href);
-    }
-    window.addEventListener("DOMContentLoaded", ()=>{
-      document.getElementById("langSwitch").addEventListener("click",(e)=>{e.preventDefault(); setLang(LANG==="fr"?"en":"fr");});
-      document.getElementById("saveBtn").addEventListener("click",()=>saveDraft(getDataFromForm()));
-      document.getElementById("loadBtn").addEventListener("click",()=>setDataToForm(loadDraft()));
-      document.getElementById("clearBtn").addEventListener("click",()=>{clearDraft(); setDataToForm({});});
-      document.getElementById("prevBtn").addEventListener("click",()=>go(Math.max(0,(window.__STEP__||0)-1)));
-      document.getElementById("nextBtn").addEventListener("click",()=>go(Math.min(4,(window.__STEP__||0)+1)));
-      document.getElementById("submitBtn").addEventListener("click",onSubmit);
-      document.getElementById("exportBtn").addEventListener("click",exportJSON);
-      document.getElementById("printBtn").addEventListener("click",()=>window.print());
-      document.getElementById("openReport").addEventListener("click",()=>location.href="/evaluation-report.html");
-      setDataToForm(loadDraft());
-      renderText(); go(0);
-    });
-  </script>
+  <!-- SIG:FORM-v3 -->
   <style>
-    :root { --ink:#0f172a; --muted:#64748b; --brand:#0ea5e9; --bg:#ffffff; --line:#e2e8f0; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--ink); background:var(--bg); }
-    header, main { max-width: 980px; margin: 0 auto; padding: 16px; }
-    header { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
-    a { color: var(--brand); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; padding:10px 14px; border:1px solid var(--line); border-radius:10px; background:#fff; cursor:pointer; font-weight:600; }
-    .btn.primary { background: var(--brand); color:#fff; border-color: var(--brand); }
-    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
-    .field { display:flex; flex-direction:column; gap:6px; }
-    label { font-size:14px; color:var(--muted); }
-    input, select, textarea { width: 100%; padding:10px 12px; border-radius:10px; border:1px solid var(--line); font: inherit; background:#fff; }
-    textarea { min-height: 96px; resize: vertical; }
-    .steps { display:flex; gap:8px; flex-wrap:wrap; margin: 12px 0 18px; }
-    .badge { font-size:12px; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:6px 10px; }
-    .badge.active { color:#000; border-color:var(--brand); }
-    .card { border:1px solid var(--line); border-radius:14px; padding:16px; background:#fff; }
-    .stack { display:flex; gap:10px; flex-wrap:wrap; }
-    .actions { display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; margin-top:16px; }
-    .right { display:flex; gap:10px; }
-    .step { display:none; }
-    .step.active { display:block; }
-    .muted { color:var(--muted); }
-    footer { border-top:1px solid var(--line); padding:16px; margin-top:20px; font-size:12px; color:var(--muted); text-align:center; }
-    @media (max-width: 720px){ .grid { grid-template-columns: 1fr; } header, main { padding:12px; } }
+    body{font-family:Arial,Helvetica,sans-serif;background:#f9fafb;margin:0;color:#111;}
+    main{max-width:800px;margin:0 auto;padding:20px;}
+    h1{text-align:center;color:#0f766e}
+    .card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:20px;margin-top:20px;}
+    label{display:block;margin-top:10px;font-weight:600;}
+    input,textarea,select{width:100%;padding:8px;margin-top:4px;border:1px solid #cbd5e1;border-radius:6px;}
+    .actions{margin-top:20px;display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap}
+    button{background:#0f766e;color:white;border:none;padding:10px 16px;border-radius:6px;cursor:pointer}
+    button.secondary{background:#64748b}
+    .step{display:none}
+    .step.active{display:block}
+    .hint{margin-top:16px;color:#475569;font-size:.9rem}
+    footer{text-align:center;margin-top:30px;color:#64748b}
   </style>
 </head>
 <body>
-  <header>
-    <div id="brand" style="font-weight:700;">MedBridge Africa</div>
-    <nav class="stack">
-      <a class="btn" href="/evaluation-report.html" id="openReport">Voir rapport</a>
-      <a class="btn" href="#" id="langSwitch">English</a>
-    </nav>
-  </header>
-
   <main>
-    <h1 id="title" style="font-size:28px; margin:10px 0 4px;">Formulaire d'Évaluation</h1>
+    <h1>Évaluation d’éligibilité</h1>
 
-    <div class="steps">
-      <span class="badge active" data-badge="1"></span>
-      <span class="badge" data-badge="2"></span>
-      <span class="badge" data-badge="3"></span>
-      <span class="badge" data-badge="4"></span>
-      <span class="badge" data-badge="5"></span>
-    </div>
+    <!-- Step 1 -->
+    <section class="card step active" data-step="0">
+      <h2>1) Profil & Choix du programme</h2>
+      <label>Programme visé</label>
+      <select id="program" required>
+        <option value="">— choisir —</option>
+        <option>EB1-A</option>
+        <option>EB2-NIW</option>
+      </select>
 
-    <div class="stack" style="margin-bottom:10px;">
-      <button class="btn" id="saveBtn">Enregistrer le brouillon</button>
-      <button class="btn" id="loadBtn">Charger le brouillon</button>
-      <button class="btn" id="clearBtn">Effacer le brouillon</button>
-    </div>
+      <label>Nom complet</label>
+      <input id="full_name" type="text" placeholder="Votre nom complet" required/>
 
-    <!-- Étape 1 -->
-    <section class="card step active">
-      <h2 class="step-title">1) Profil & Choix du programme</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="program">Programme visé</label>
-          <select id="program">
-            <option value="">— choisir —</option>
-            <option value="EB1A">EB1-A (Extraordinary Ability)</option>
-            <option value="EB2NIW">EB2-NIW (National Interest Waiver)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="full_name">Nom complet</label>
-          <input id="full_name" type="text" />
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" type="email" />
-        </div>
-        <div class="field">
-          <label for="phone">Téléphone / WhatsApp</label>
-          <input id="phone" type="text" />
-        </div>
-        <div class="field">
-          <label for="country">Pays de résidence</label>
-          <input id="country" type="text" />
-        </div>
-        <div class="field">
-          <label for="field">Domaine d'expertise</label>
-          <input id="field" type="text" placeholder="ex. médecine, santé publique, IA…" />
-        </div>
-      </div>
+      <label>Email</label>
+      <input id="email" type="email" placeholder="Adresse email" required/>
+
       <div class="actions">
-        <div></div>
-        <div class="right">
-          <button class="btn primary" id="nextBtn">Suivant</button>
-        </div>
+        <button type="button" class="next">Suivant</button>
+      </div>
+      <p class="hint">Astuce : vous pouvez enregistrer un brouillon dans votre navigateur (non activé ici pour simplicité).</p>
+    </section>
+
+    <!-- Step 2 -->
+    <section class="card step" data-step="1">
+      <h2>2) Académique & Expérience</h2>
+      <label>Niveau académique le plus élevé</label>
+      <select id="education"><option value=""></option><option>Licence</option><option>Master</option><option>Doctorat</option></select>
+
+      <label>Années d’expérience</label>
+      <input id="years" type="number" min="0" value="0"/>
+
+      <label>Résumé de parcours</label>
+      <textarea id="summary" placeholder="3–5 lignes…"></textarea>
+
+      <div class="actions">
+        <button type="button" class="prev secondary">Précédent</button>
+        <button type="button" class="next">Suivant</button>
       </div>
     </section>
 
-    <!-- Étape 2 -->
-    <section class="card step">
-      <h2 class="step-title">2) Académique & Expérience</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="highest">Niveau académique le plus élevé</label>
-          <input id="highest" type="text" placeholder="ex. PhD / MD / MSc / MPH…" />
-        </div>
-        <div class="field">
-          <label for="years">Années d'expérience</label>
-          <input id="years" type="number" min="0" />
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="summary">Résumé de parcours (3–5 lignes)</label>
-          <textarea id="summary"></textarea>
-        </div>
-      </div>
+    <!-- Step 3 -->
+    <section class="card step" data-step="2">
+      <h2>3) Preuves & Réalisations</h2>
+      <label>Publications scientifiques (nombre estimé)</label>
+      <input id="pubs" type="number" min="0" value="0"/>
+
+      <label>Citations (Google Scholar / Scopus)</label>
+      <input id="cites" type="number" min="0" value="0"/>
+
+      <label>Prix / distinctions</label>
+      <textarea id="awards" placeholder="Liste brève…"></textarea>
+
       <div class="actions">
-        <button class="btn" id="prevBtn">Précédent</button>
-        <div class="right">
-          <button class="btn primary" id="nextBtn">Suivant</button>
-        </div>
+        <button type="button" class="prev secondary">Précédent</button>
+        <button type="button" class="next">Suivant</button>
       </div>
     </section>
 
-    <!-- Étape 3 -->
-    <section class="card step">
-      <h2 class="step-title">3) Preuves & Réalisations</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="pubs">Publications scientifiques (nombre estimé)</label>
-          <input id="pubs" type="number" min="0" />
-        </div>
-        <div class="field">
-          <label for="cites">Citations (Google Scholar / Scopus)</label>
-          <input id="cites" type="number" min="0" />
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="awards">Prix / distinctions (listez brièvement)</label>
-          <textarea id="awards" placeholder="Ex. Prix national de recherche 2022; Lauréat conférence internationale…"></textarea>
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="reviewing">Rôles de jury / comité / reviewing</label>
-          <textarea id="reviewing" placeholder="Ex. Reviewer pour [revue], membre de comité scientifique…"></textarea>
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="leadership">Leadership / rôle critique</label>
-          <textarea id="leadership" placeholder="Ex. Chef de service, PI d'un projet financé, poste clé…"></textarea>
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="media">Médiatisation (articles, interviews, médias)</label>
-          <textarea id="media" placeholder="Incluez des liens si possible."></textarea>
-        </div>
-      </div>
+    <!-- Step 4 -->
+    <section class="card step" data-step="3">
+      <h2>4) Projet & Objectifs aux États-Unis</h2>
+      <label>Secteur / thématique du projet</label>
+      <input id="project_sector" type="text"/>
+
+      <label>État / Ville ciblé(e)</label>
+      <input id="project_place" type="text"/>
+
+      <label>Résumé du projet</label>
+      <textarea id="project_summary" placeholder="Importance nationale, bénéficiaires, livrables…"></textarea>
+
       <div class="actions">
-        <button class="btn" id="prevBtn">Précédent</button>
-        <div class="right">
-          <button class="btn primary" id="nextBtn">Suivant</button>
-        </div>
+        <button type="button" class="prev secondary">Précédent</button>
+        <button type="button" class="next">Suivant</button>
       </div>
     </section>
 
-    <!-- Étape 4 -->
-    <section class="card step">
-      <h2 class="step-title">4) Projet & Objectifs aux États-Unis</h2>
-      <div class="grid">
-        <div class="field">
-          <label for="sector">Secteur / Thématique du projet</label>
-          <input id="sector" type="text" placeholder="ex. santé publique, IA médicale, nutrition…" />
-        </div>
-        <div class="field">
-          <label for="statecity">État/Ville ciblé(e)</label>
-          <input id="statecity" type="text" placeholder="ex. New York, Texas, DC…" />
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="proj">Résumé du projet (importance nationale, bénéficiaires, livrables)</label>
-          <textarea id="proj"></textarea>
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="lors">Lettres de recommandation prévues (quantité / émetteurs)</label>
-          <textarea id="lors" placeholder="Ex. 3 lettres : doyen, chef de service, partenaire US…"></textarea>
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label for="uspartners">Partenaires US / preuves de faisabilité</label>
-          <textarea id="uspartners" placeholder="MoU, e-mails, LoI, collaborations, essais pilotes…"></textarea>
-        </div>
-      </div>
+    <!-- Step 5 -->
+    <section class="card step" data-step="4">
+      <h2>5) Consentement & Envoi</h2>
+      <label>
+        <input id="consent" type="checkbox" /> J’accepte le traitement de mes données pour l’évaluation.
+      </label>
       <div class="actions">
-        <button class="btn" id="prevBtn">Précédent</button>
-        <div class="right">
-          <button class="btn primary" id="nextBtn">Suivant</button>
-        </div>
+        <button type="button" class="prev secondary">Précédent</button>
+        <button type="button" id="submit">Soumettre</button>
       </div>
     </section>
 
-    <!-- Étape 5 -->
-    <section class="card step">
-      <h2 class="step-title">5) Consentement & Envoi</h2>
-      <div class="field">
-        <label id="consentLbl">
-          <input id="consent" type="checkbox" /> J'accepte que mes données soient traitées pour l'évaluation.
-        </label>
-      </div>
-
-      <div class="actions">
-        <button class="btn" id="prevBtn">Précédent</button>
-        <div class="right">
-          <button class="btn" id="exportBtn">Exporter en JSON</button>
-          <button class="btn" id="printBtn">Imprimer / PDF</button>
-          <button class="btn primary" id="submitBtn">Soumettre l'évaluation</button>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:14px;">
-        <h3 id="afterTitle" class="muted" style="margin:0 0 6px;">Après soumission, que se passe-t-il ?</h3>
-        <ul id="afterList" class="muted" style="margin:0 0 4px 18px;"></ul>
-      </div>
-    </section>
+    <footer>© <span id="year"></span> MedBridge Africa</footer>
   </main>
 
-  <footer>© <span id="year"></span> MedBridge Africa</footer>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script>
+    // Navigation multi-étapes robuste (délégation d'événements)
+    (function(){
+      const steps = Array.from(document.querySelectorAll(".step"));
+      let idx = steps.findIndex(s => s.classList.contains("active"));
+      if (idx < 0) { steps[0].classList.add("active"); idx = 0; }
+
+      function show(i){
+        steps.forEach((s,k)=>s.classList.toggle("active", k===i));
+        idx = i;
+        // Scroll top pour éviter qu’un saut de page bloque les clics
+        window.scrollTo(0,0);
+      }
+
+      document.addEventListener("click", function(e){
+        const t = e.target;
+        if (!(t instanceof HTMLElement)) return;
+
+        if (t.classList.contains("next")) {
+          // Petite validation minimale à l’étape 0
+          if (idx===0) {
+            const program = document.getElementById("program");
+            const name = document.getElementById("full_name");
+            const mail = document.getElementById("email");
+            if (!program.value || !name.value || !mail.value) {
+              alert("Veuillez renseigner Programme, Nom et Email.");
+              return;
+            }
+          }
+          if (idx < steps.length-1) show(idx+1);
+          return;
+        }
+
+        if (t.classList.contains("prev")) {
+          if (idx > 0) show(idx-1);
+          return;
+        }
+
+        if (t.id === "submit") {
+          if (!document.getElementById("consent").checked) {
+            alert("Merci de cocher la case de consentement.");
+            return;
+          }
+          // Redirige vers le rapport (statique) — on peut brancher /api/eligibility plus tard
+          location.href = "/evaluation-report.html?v=" + Date.now();
+        }
+      });
+
+      // Année dans le footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>

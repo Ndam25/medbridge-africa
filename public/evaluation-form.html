@@ -1,1 +1,298 @@
-[COLLE ICI LE FICHIER 1 ENTIER]
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MedBridge Africa — Formulaire d’Évaluation</title>
+<style>
+  :root{
+    --bg:#f7f7f9; --fg:#0f172a; --muted:#64748b; --card:#ffffff; --border:#e5e7eb;
+    --primary:#1d4ed8; --primary-600:#1e40af; --chip:#eaf1ff; --chipfg:#1d4ed8;
+  }
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell}
+  a{color:inherit;text-decoration:none} a.underline{text-decoration:underline}
+  header{background:#fff;border-bottom:1px solid var(--border)}
+  .nav{max-width:960px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:600}
+  .menu{display:flex;gap:16px;font-size:14px;align-items:center}
+  .container{max-width:800px;margin:0 auto;padding:32px 16px}
+  h1{font-size:28px;margin:0 0 8px} .muted{color:var(--muted);margin:0 0 24px}
+  .stepper{display:flex;gap:8px;justify-content:space-between;margin:0 0 16px}
+  .step{flex:1;text-align:center;opacity:.6}
+  .step.active{opacity:1}
+  .dot{width:32px;height:32px;border-radius:999px;display:grid;place-content:center;margin:0 auto;background:#e5e7eb}
+  .active .dot{background:var(--primary);color:#fff}
+  .dot + .label{font-size:12px;margin-top:4px;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+  label{display:block;font-size:14px;font-weight:600;margin:16px 0 6px}
+  input,select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:inherit}
+  textarea{resize:vertical}
+  .grid{display:grid;gap:16px}
+  @media(min-width:720px){.cols-2{grid-template-columns:1fr 1fr} .cols-3{grid-template-columns:1fr 1fr 1fr}}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .btn{border:0;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}
+  .btn-ghost{background:#f3f4f6} .btn-ghost:hover{background:#e5e7eb}
+  .btn-primary{background:var(--primary);color:#fff} .btn-primary:hover{background:var(--primary-600)}
+  .msg{font-size:14px;color:var(--muted);margin-top:6px}
+  .spacer{flex:1}
+  .chip{display:inline-block;background:var(--chip);color:var(--chipfg);padding:4px 8px;border-radius:999px;font-size:12px}
+  footer{border-top:1px solid var(--border);margin-top:48px}
+  .foot{max-width:960px;margin:0 auto;padding:24px 16px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <a class="brand" href="/fr">MedBridge Africa</a>
+      <div class="menu">
+        <a class="underline" href="/fr/eligibility">Évaluation</a>
+        <a class="underline" href="/fr/services">Services</a>
+        <a class="underline" href="/fr/a-propos">À propos</a>
+        <a class="underline" href="/fr/contact">Contact</a>
+        <span style="opacity:.4">|</span>
+        <a class="underline" href="/en/evaluation-form.html">English</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Formulaire d’Évaluation</h1>
+    <p class="muted">Dites-nous en plus pour une recommandation rapide (EB1-A / EB2-NIW).</p>
+
+    <!-- Stepper -->
+    <ol class="stepper">
+      <li class="step active"><div class="dot">1</div><div class="label">Profil</div></li>
+      <li class="step"><div class="dot">2</div><div class="label">Académique</div></li>
+      <li class="step"><div class="dot">3</div><div class="label">Réalisations</div></li>
+      <li class="step"><div class="dot">4</div><div class="label">Projet US</div></li>
+      <li class="step"><div class="dot">5</div><div class="label">Consentement</div></li>
+    </ol>
+
+    <form id="elig-form" class="card">
+      <!-- 1) Profil -->
+      <section class="grid">
+        <div>
+          <label>Programme visé</label>
+          <select name="program">
+            <option value="">— choisir —</option>
+            <option>EB1-A</option>
+            <option>EB2-NIW</option>
+            <option>À décider / à conseiller</option>
+          </select>
+        </div>
+        <div>
+          <label>Nom complet</label>
+          <input name="full_name" placeholder="Prénom NOM" required />
+        </div>
+        <div>
+          <label>Email</label>
+          <input type="email" name="email" required />
+        </div>
+        <div class="grid cols-2">
+          <div>
+            <label>Téléphone / WhatsApp</label>
+            <input name="phone" placeholder="+221…" />
+          </div>
+          <div>
+            <label>Pays de résidence</label>
+            <input name="country" placeholder="Sénégal…" />
+          </div>
+        </div>
+        <div>
+          <label>Domaine d’expertise</label>
+          <input name="profile" placeholder="Médecine, santé publique, IA…" />
+        </div>
+      </section>
+
+      <!-- 2) Académique & Expérience -->
+      <section class="grid" style="margin-top:12px">
+        <div class="grid cols-2">
+          <div>
+            <label>Niveau académique le plus élevé</label>
+            <select name="highest_degree">
+              <option value="">— choisir —</option>
+              <option>Licence</option><option>Master</option>
+              <option>Doctorat / PhD</option><option>MD / Spécialité</option><option>Autre</option>
+            </select>
+          </div>
+          <div>
+            <label>Années d’expérience</label>
+            <input type="number" min="0" name="years" value="0" />
+          </div>
+        </div>
+        <div>
+          <label>Résumé de parcours (3–5 lignes)</label>
+          <textarea name="summary" rows="3" placeholder="Décrivez brièvement votre parcours académique et professionnel."></textarea>
+        </div>
+      </section>
+
+      <!-- 3) Réalisations -->
+      <section class="grid" style="margin-top:12px">
+        <div class="grid cols-3">
+          <div>
+            <label>Publications (estimation)</label>
+            <input type="number" min="0" name="pubs" value="0" />
+          </div>
+          <div>
+            <label>Citations (Scholar/Scopus)</label>
+            <input type="number" min="0" name="cites" value="0" />
+          </div>
+          <div>
+            <label>Prix / distinctions</label>
+            <input name="awards" placeholder="Liste brève" />
+          </div>
+        </div>
+        <div class="grid cols-2">
+          <div>
+            <label>Jury / reviewing</label>
+            <input name="reviewing" placeholder="Reviewer, comité scientifique…" />
+          </div>
+          <div>
+            <label>Leadership / rôle critique</label>
+            <input name="leadership" placeholder="Chef de service, PI, poste clé…" />
+          </div>
+        </div>
+        <div>
+          <label>Médiatisation (liens)</label>
+          <textarea name="media" rows="2" placeholder="Articles, interviews"></textarea>
+        </div>
+      </section>
+
+      <!-- 4) Projet US -->
+      <section class="grid" style="margin-top:12px">
+        <div class="grid cols-2">
+          <div>
+            <label>Secteur / Thématique</label>
+            <input name="sector" placeholder="IA médicale, santé publique…" />
+          </div>
+          <div>
+            <label>État / Ville ciblé(e)</label>
+            <input name="us_location" placeholder="New York, Texas, DC…" />
+          </div>
+        </div>
+        <div>
+          <label>Résumé du projet</label>
+          <textarea name="project" rows="3" placeholder="Importance nationale, bénéficiaires, livrables…"></textarea>
+        </div>
+        <div>
+          <label>Lettres de recommandation (prévu)</label>
+          <input name="letters" placeholder="Quantité / émetteurs" />
+        </div>
+        <div>
+          <label>Partenaires US / faisabilité</label>
+          <textarea name="partners" rows="2" placeholder="MoU, LoI, collaborations…"></textarea>
+        </div>
+      </section>
+
+      <!-- 5) Consentement -->
+      <section style="margin-top:12px">
+        <p class="muted" style="margin:0 0 8px">
+          Vos informations sont utilisées uniquement pour l’évaluation d’éligibilité EB1-A / EB2-NIW par MedBridge Africa.
+        </p>
+        <label class="row" style="font-weight:400">
+          <input type="checkbox" id="consent" style="width:18px;height:18px" />
+          <span>J’accepte le traitement pour l’évaluation</span>
+        </label>
+      </section>
+
+      <div class="row" style="margin-top:12px">
+        <button id="saveDraft" type="button" class="btn btn-ghost">Enregistrer le brouillon</button>
+        <button id="loadDraft" type="button" class="btn btn-ghost">Charger le brouillon</button>
+        <span class="spacer"></span>
+        <button id="submitBtn" class="btn btn-primary">Soumettre l’évaluation</button>
+      </div>
+      <p id="msg" class="msg"></p>
+
+      <!-- champs attendus par l’API -->
+      <input type="hidden" name="goals" />
+      <input type="hidden" name="budget" />
+      <input type="hidden" name="notes" />
+      <input type="hidden" name="source" value="Website" />
+    </form>
+
+    <p class="muted" style="margin-top:16px">
+      <span class="chip">Info</span>
+      Après soumission : e-mail de confirmation → calcul d’un score indicatif EB1-A / EB2-NIW → rapport + recommandations.
+    </p>
+
+    <footer>
+      <div class="foot">© <span id="year"></span> MedBridge Africa</div>
+    </footer>
+  </main>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const form = document.getElementById('elig-form');
+  const msg  = document.getElementById('msg');
+  const KEY  = 'mba_eval_draft_v1';
+
+  // Save draft
+  document.getElementById('saveDraft').onclick = () => {
+    const data = Object.fromEntries(new FormData(form).entries());
+    localStorage.setItem(KEY, JSON.stringify(data));
+    msg.textContent = 'Brouillon enregistré localement.';
+  };
+  // Load draft
+  document.getElementById('loadDraft').onclick = () => {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) { msg.textContent = 'Aucun brouillon trouvé.'; return; }
+    const data = JSON.parse(raw);
+    Object.entries(data).forEach(([k,v]) => {
+      const el = form.elements.namedItem(k);
+      if (el) el.value = v;
+    });
+    msg.textContent = 'Brouillon chargé.';
+  };
+
+  // Submit
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = '';
+
+    if (!document.getElementById('consent').checked) {
+      msg.textContent = 'Veuillez accepter le consentement.';
+      return;
+    }
+
+    const fd  = new FormData(form);
+    const goals = [
+      fd.get('summary') || '',
+      fd.get('project') || '',
+      'Programme: ' + (fd.get('program') || '')
+    ].filter(Boolean).join('\n\n');
+
+    const payload = {
+      full_name: fd.get('full_name') || '',
+      email: fd.get('email') || '',
+      phone: fd.get('phone') || '',
+      country: fd.get('country') || '',
+      profile: (fd.get('profile') || '').toString(),
+      goals,
+      budget: '',
+      notes: '',
+      source: 'Website'
+    };
+
+    try {
+      const r = await fetch('/api/eligibility', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const t = await r.json().catch(()=>({}));
+      if (!r.ok || !t.ok) { msg.textContent = 'Erreur lors de la soumission. Réessayez.'; return; }
+
+      const q = new URLSearchParams({
+        name: payload.full_name,
+        email: payload.email,
+        status: t.status || 'stored_only'
+      });
+      location.href = `/evaluation-report.html?${q.toString()}`;
+    } catch {
+      msg.textContent = 'Réseau indisponible. Réessayez.';
+    }
+  });
+</script>
+</body>
+</html>

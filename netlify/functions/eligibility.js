@@ -83,3 +83,5 @@ exports.handler = async (event) => {
   return { statusCode:201, headers:{'content-type':'application/json'},
     body: JSON.stringify({ ok:true, status:'stored_only' }) };
 };
+
+// bump 2025-11-11T22:39:38

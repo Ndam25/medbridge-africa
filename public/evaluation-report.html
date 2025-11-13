@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MedBridge Africa — Rapport d'Évaluation</title>
-  <!-- SIG:REPORT-v3 -->
   <style>
     body{font-family:Arial,Helvetica,sans-serif;background:#f9fafb;margin:0;color:#111;}
     main{max-width:900px;margin:0 auto;padding:20px;}
@@ -19,36 +18,154 @@
 </head>
 <body>
   <main>
-    <h1>Rapport d’évaluation — Aperçu</h1>
-    <p class="muted">Ce rapport est un exemple statique. Quand le formulaire sera branché à <code>/api/eligibility</code>, on affichera ici les données réelles et un score estimé EB1-A / EB2-NIW.</p>
+    <h1>Rapport d’évaluation — Résultats indicatifs</h1>
+    <p id="report-intro" class="muted">
+      Ce rapport est actuellement un exemple statique. Une fois vos données chargées, il présentera
+      un score indicatif et des recommandations personnalisées pour les catégories EB1-A / EB2-NIW.
+    </p>
 
     <section class="card">
       <h2>Résumé</h2>
       <div class="grid">
         <div>
-          <strong>Programme pressenti</strong><br/>EB2-NIW (exemple)
+          <strong>Programme pressenti</strong><br/>
+          <span id="r-program">EB2-NIW (exemple)</span>
         </div>
         <div>
-          <strong>Score indicatif</strong><br/>70 / 100 (exemple)
+          <strong>Score indicatif</strong><br/>
+          <span id="r-score">70 / 100 (exemple)</span>
         </div>
       </div>
     </section>
 
     <section class="card">
-      <h2>Recommandations</h2>
-      <ul>
+      <h2>Profil du candidat</h2>
+      <p><strong>Nom :</strong> <span id="r-name">—</span></p>
+      <p><strong>Email :</strong> <span id="r-email">—</span></p>
+      <p><strong>Pays :</strong> <span id="r-country">—</span></p>
+      <p><strong>Niveau académique :</strong> <span id="r-edu">—</span></p>
+      <p><strong>Années d’expérience :</strong> <span id="r-years">—</span></p>
+      <p><strong>Publications estimées :</strong> <span id="r-pubs">—</span></p>
+      <p><strong>Citations estimées :</strong> <span id="r-cites">—</span></p>
+      <p><strong>Prix / distinctions :</strong> <span id="r-awards">—</span></p>
+    </section>
+
+    <section class="card">
+      <h2>Projet et objectifs aux États-Unis</h2>
+      <p><strong>Secteur / thématique :</strong> <span id="r-sector">—</span></p>
+      <p><strong>État / Ville ciblé(e) :</strong> <span id="r-place">—</span></p>
+      <p><strong>Résumé du projet :</strong></p>
+      <p id="r-project">—</p>
+    </section>
+
+    <section class="card">
+      <h2>Recommandations préliminaires</h2>
+      <ul id="r-recos">
         <li>Renforcer le dossier de lettres de recommandation (US si possible).</li>
-        <li>Documenter l’impact national du projet (alignement priorités US).</li>
+        <li>Documenter l’impact national du projet (alignement avec les priorités des États-Unis).</li>
         <li>Préparer un plan de publications/communications sur 12–18 mois.</li>
       </ul>
+      <p class="muted" style="margin-top:10px;">
+        Ces recommandations restent indicatives et ne remplacent pas une analyse juridique complète
+        par un avocat spécialisé en immigration.
+      </p>
     </section>
 
     <p>
-      <a class="btn" href="/evaluation-form.html">Revenir au formulaire</a>
+      <a class="btn" href="/evaluation-form.html">Remplir à nouveau le formulaire</a>
     </p>
 
-    <footer>© <span id="year"></span> MedBridge Africa</footer>
+    <footer>
+      © <span id="year"></span> MedBridge Africa — Rapport indicatif d’éligibilité.
+    </footer>
   </main>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+  <script>
+  (function() {
+    const yearSpan = document.getElementById("year");
+    if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+    let raw = null;
+    try {
+      raw = localStorage.getItem("eligibility_last");
+    } catch (e) {
+      console.warn("Impossible de lire localStorage :", e);
+    }
+    if (!raw) {
+      console.warn("Aucune donnée d’éligibilité trouvée dans localStorage (fallback statique).");
+      return;
+    }
+
+    let p;
+    try {
+      p = JSON.parse(raw);
+    } catch (e) {
+      console.warn("JSON invalid dans eligibility_last :", e);
+      return;
+    }
+
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (value == null || value === "") return;
+      el.textContent = value;
+    };
+
+    const scoreText = (p.score != null ? `${p.score} / 100` : "—");
+
+    setText("r-program", p.program || "EB2-NIW (estimé)");
+    setText("r-score", scoreText);
+    setText("r-name", p.full_name || "—");
+    setText("r-email", p.email || "—");
+    setText("r-country", p.country || "—");
+    setText("r-edu", p.education || "Non précisé");
+    setText("r-years", (p.years != null ? p.years : "—"));
+    setText("r-pubs", (p.pubs != null ? p.pubs : "—"));
+    setText("r-cites", (p.cites != null ? p.cites : "—"));
+    setText("r-awards", p.awards && p.awards.trim() ? p.awards : "Non précisé");
+    setText("r-sector", p.project_sector || "Non précisé");
+    setText("r-place", p.project_place || "Non précisé");
+    setText("r-project", p.project_summary || "Non précisé");
+
+    const recos = [];
+    const score = typeof p.score === "number" ? p.score : null;
+
+    if (score != null) {
+      if (score >= 75) {
+        recos.push("Profil potentiellement compétitif pour EB1-A ou EB2-NIW. Envisager une revue détaillée du dossier avec l’équipe MedBridge Africa.");
+      } else if (score >= 55) {
+        recos.push("Profil intéressant pour EB2-NIW, mais nécessitant un renforcement ciblé (publications, leadership, impact national).");
+      } else {
+        recos.push("Profil en construction. Prioriser le renforcement académique, les publications et les responsabilités de leadership.");
+      }
+    }
+
+    if (!p.awards || !p.awards.trim()) {
+      recos.push("Identifier, documenter et mettre en avant toutes les distinctions, bourses et responsabilités significatives.");
+    }
+
+    if (!p.project_summary || p.project_summary.length < 150) {
+      recos.push("Formaliser un projet détaillé (objectifs, impact national, population cible, résultats attendus) pour les États-Unis.");
+    }
+
+    const ul = document.getElementById("r-recos");
+    if (ul && recos.length > 0) {
+      ul.innerHTML = "";
+      recos.forEach(txt => {
+        const li = document.createElement("li");
+        li.textContent = txt;
+        ul.appendChild(li);
+      });
+    }
+
+    const intro = document.getElementById("report-intro");
+    if (intro) {
+      intro.textContent =
+        "Ce rapport a été généré automatiquement à partir des informations que vous avez saisies. " +
+        "Il fournit un score indicatif et des recommandations préliminaires pour les catégories EB1-A / EB2-NIW. " +
+        "Il ne remplace pas une consultation détaillée ni un avis juridique formel.";
+    }
+  })();
+  </script>
 </body>
 </html>

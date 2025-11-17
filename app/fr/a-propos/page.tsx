@@ -1,6 +1,6 @@
-// app/a-propos/page.tsx
+// app/fr/a-propos/page.tsx
 
-export default function AProposPage() {
+export default function AProposPageFR() {
   return (
     <main className="max-w-4xl mx-auto px-4 py-12 space-y-10">
       <section>
@@ -151,4 +151,3 @@ export default function AProposPage() {
     </main>
   );
 }
-

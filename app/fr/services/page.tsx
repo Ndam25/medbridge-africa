@@ -1,6 +1,6 @@
-// app/services/page.tsx
+// app/fr/services/page.tsx
 
-export default function ServicesPage() {
+export default function ServicesPageFR() {
   return (
     <main className="max-w-4xl mx-auto px-4 py-12 space-y-10">
       <section>
@@ -161,4 +161,3 @@ export default function ServicesPage() {
     </main>
   );
 }
-

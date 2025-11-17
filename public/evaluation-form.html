@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>MedBridge Africa — Rapport de pré-évaluation</title>
+    <title>MedBridge Africa — Formulaire de pré-évaluation</title>
     <style>
       body {
         font-family: Arial, Helvetica, sans-serif;
@@ -11,535 +11,533 @@
         margin: 0;
         color: #0f172a;
       }
-      header {
-        background: #0f766e;
-        color: white;
-        padding: 18px 20px;
-      }
-      header h1 {
-        margin: 0;
-        font-size: 1.4rem;
-      }
-      header p {
-        margin: 4px 0 0;
-        font-size: 0.9rem;
-        opacity: 0.9;
-      }
+
       main {
         max-width: 900px;
-        margin: 24px auto 32px;
-        padding: 0 16px;
-      }
-      .card {
-        background: #fff;
-        border-radius: 14px;
-        padding: 28px;
-        margin-top: 22px;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-        border: 1px solid #e2e8f0;
-      }
-      h2 {
-        margin-top: 0;
-        font-size: 1.3rem;
-        margin-bottom: 12px;
-        color: #0f172a;
-      }
-      .score-row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 12px;
-      }
-      .score-big {
-        font-size: 3rem;
-        font-weight: 800;
-        color: #0f766e;
-      }
-      .score-badge {
-        display: inline-block;
-        padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        background: #e0f2fe;
-        color: #0369a1;
-      }
-      .muted {
-        color: #64748b;
-        font-size: 0.9rem;
-      }
-      .progress {
-        width: 100%;
-        background: #e2e8f0;
-        border-radius: 999px;
-        height: 12px;
-        overflow: hidden;
-        margin-top: 10px;
-        margin-bottom: 4px;
-      }
-      .progress-bar {
-        height: 12px;
-        background: #0f766e;
-        width: 70%;
-        transition: width 0.8s ease;
-      }
-      ul {
-        padding-left: 18px;
-      }
-      li {
-        margin-bottom: 4px;
-      }
-      footer {
-        text-align: center;
-        margin: 10px 0 16px;
-        color: #94a3b8;
-        font-size: 0.85rem;
-      }
-      .btn-link {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 8px 14px;
-        border-radius: 8px;
-        background: #0f172a;
-        color: white;
-        font-size: 0.9rem;
-        text-decoration: none;
-      }
-      .btn-link:hover {
-        opacity: 0.95;
-      }
-      .cta-container {
-        text-align: center;
-        margin-top: 18px;
-      }
-      .cta-main {
-        display: inline-block;
-        background: #0f766e;
-        color: white;
-        padding: 14px 26px;
-        border-radius: 12px;
-        font-size: 1rem;
-        font-weight: 600;
-        text-decoration: none;
-      }
-      .cta-main:hover {
-        background: #0d5d56;
-        transition: 0.3s ease;
-      }
-      .cta-secondary {
-        display: block;
-        text-align: center;
-        margin-top: 10px;
-        font-size: 0.9rem;
-        color: #0f172a;
-        text-decoration: none;
-      }
-      .cta-secondary:hover {
-        text-decoration: underline;
-      }
-      .pdf-btn {
-        margin-top: 20px;
-        display: inline-block;
-        padding: 10px 18px;
-        border-radius: 10px;
-        background: #1e293b;
-        color: #fff;
-        font-size: 0.9rem;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-      }
-      .pdf-btn:hover {
-        opacity: 0.9;
-      }
-      .note-placeholder {
-        margin-top: 10px;
-        font-size: 0.85rem;
-        color: #6b7280;
+        margin: 0 auto;
+        padding: 24px 16px 40px;
       }
 
-      @media print {
-        .cta-container,
-        .pdf-btn,
-        .btn-link {
-          display: none !important;
-        }
-        body {
-          background: white;
-        }
-        .card {
-          box-shadow: none;
-          border: none;
-          page-break-inside: avoid;
-        }
-        header {
-          background: white;
-          color: #0f172a;
-          border-bottom: 1px solid #e2e8f0;
+      h1 {
+        text-align: center;
+        color: #0f766e;
+        margin-top: 12px;
+        margin-bottom: 8px;
+      }
+
+      p.lead {
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto 20px auto;
+        font-size: 0.95rem;
+        color: #475569;
+      }
+
+      .card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+      }
+
+      h2 {
+        margin-top: 0;
+        color: #0f172a;
+        font-size: 1.1rem;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 8px 10px;
+        margin-top: 4px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .hint {
+        font-size: 0.8rem;
+        color: #64748b;
+        margin-top: 2px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .actions {
+        margin-top: 22px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      #submit-btn {
+        background: #0f766e;
+        color: #ffffff;
+      }
+
+      #submit-btn:hover {
+        background: #115e59;
+      }
+
+      .footer-note {
+        margin-top: 20px;
+        font-size: 0.8rem;
+        color: #64748b;
+        text-align: center;
+      }
+
+      @media (max-width: 640px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>MedBridge Africa — Rapport de pré-évaluation</h1>
-     <p>
-Pré-évaluation EB-1A / EB-2 NIW par MedBridge Africa — un outil d’orientation
-stratégique pour les professionnels de santé africains (sans valeur juridique).
-</p>
-
-    </header>
-
     <main>
-      <!-- Carte 1 : Résultat global -->
-      <section class="card">
-        <h2>Résultat global</h2>
-        <div class="score-row">
-          <div class="score-big" id="score-line">70 / 100</div>
-          <div class="score-badge" id="program-guess">
-            Exemple indicatif — profil EB2-NIW à renforcer pour EB1-A
+      <h1>Formulaire de pré-évaluation EB-1A / EB-2 NIW</h1>
+      <p class="lead">
+        Ce formulaire permet de générer un <strong>rapport indicatif</strong> sur
+        votre potentiel EB-1A / EB-2 NIW. Il ne remplace pas un avis juridique,
+        mais constitue un outil d’aide à la décision pour votre parcours avec
+        MedBridge Africa.
+      </p>
+
+      <form id="eval-form">
+        <!-- Bloc 1 : Profil -->
+        <section class="card">
+          <h2>1) Profil & programme visé</h2>
+
+          <label for="program">Programme visé</label>
+          <select id="program" required>
+            <option value="">— choisir —</option>
+            <option value="EB1-A">EB1-A</option>
+            <option value="EB2-NIW">EB2-NIW</option>
+          </select>
+
+          <div class="grid-2">
+            <div>
+              <label for="fullName">Nom complet</label>
+              <input
+                id="fullName"
+                type="text"
+                placeholder="Ex : ADAMA NDIR"
+                required
+              />
+            </div>
+            <div>
+              <label for="email">Adresse e-mail</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="vous@example.com"
+                required
+              />
+            </div>
           </div>
+
+          <div class="grid-2">
+            <div>
+              <label for="education">Niveau d’études principal</label>
+              <select id="education" required>
+                <option value="">— choisir —</option>
+                <option value="Licence">Licence / Bachelor</option>
+                <option value="Master">Master</option>
+                <option value="Doctorat">Doctorat / PhD / Spécialité</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+            <div>
+              <label for="years">Années d’expérience professionnelle</label>
+              <input
+                id="years"
+                type="number"
+                min="0"
+                placeholder="Ex : 8"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div>
+              <label for="country">Pays d’exercice / résidence</label>
+              <input
+                id="country"
+                type="text"
+                placeholder="Ex : Sénégal, Côte d’Ivoire, etc."
+              />
+            </div>
+          </div>
+
+          <label for="summary">Résumé de votre profil</label>
+          <textarea
+            id="summary"
+            placeholder="Décrivez brièvement votre profil : domaine (santé publique, IA, épidémiologie...), rôle actuel, responsabilités, principaux résultats..."
+          ></textarea>
+          <div class="hint">
+            Idéalement 5–8 lignes. Plus la description est précise, plus
+            l’interprétation sera pertinente.
+          </div>
+        </section>
+
+        <!-- Bloc 2 : Indicateurs académiques -->
+        <section class="card">
+          <h2>2) Indicateurs académiques & professionnels</h2>
+
+          <div class="grid-2">
+            <div>
+              <label for="pubs">Publications scientifiques (nombre)</label>
+              <input
+                id="pubs"
+                type="number"
+                min="0"
+                value="0"
+                required
+              />
+              <div class="hint">
+                Inclure articles indexés, chapitres d’ouvrage, éventuellement
+                rapports techniques importants.
+              </div>
+            </div>
+            <div>
+              <label for="cites">Citations (approximation)</label>
+              <input
+                id="cites"
+                type="number"
+                min="0"
+                value="0"
+                required
+              />
+              <div class="hint">
+                Estimation Google Scholar / Scopus si possible. Sinon mettre 0
+                ou “au mieux de vos connaissances”.
+              </div>
+            </div>
+          </div>
+
+          <label for="awards">Prix / distinctions (nombre total)</label>
+          <input id="awards" type="number" min="0" value="0" />
+          <div class="hint">
+            Inclure bourses compétitives, prix scientifiques, reconnaissances
+            nationales / internationales, distinctions majeures.
+          </div>
+        </section>
+
+        <!-- Bloc 3 : Projet & impact -->
+        <section class="card">
+          <h2>3) Projet aux États-Unis & impact</h2>
+
+          <label for="sector">Secteur / domaine principal du projet</label>
+          <input
+            id="sector"
+            type="text"
+            placeholder="Ex : Santé publique, IA appliquée à la santé, épidémiologie de terrain..."
+          />
+
+          <label for="location">Lieu / contexte envisagé</label>
+          <input
+            id="location"
+            type="text"
+            placeholder="Ex : collaboration avec une université, un hôpital, un programme de santé, etc."
+          />
+
+          <label for="project">
+            Description du projet et de l’impact attendu
+          </label>
+          <textarea
+            id="project"
+            placeholder="Expliquez ce que vous souhaitez mettre en place aux États-Unis : problématique, approche, bénéficiaires, impact attendu (santé publique, innovation, underserved populations, etc.)."
+          ></textarea>
+          <div class="hint">
+            Là aussi, 10–15 lignes sont idéales. Même une version préliminaire
+            est utile pour le rapport.
+          </div>
+        </section>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button type="button" id="submit-btn">Soumettre et voir le rapport</button>
         </div>
+      </form>
 
-        <div class="progress">
-          <div class="progress-bar" id="progress-bar"></div>
-        </div>
-
-        <p class="muted" id="band-text">
-          Interprétation rapide basée sur un exemple de profil. Le rapport réel se
-          mettra à jour automatiquement à partir de vos réponses.
-        </p>
-      </section>
-
-      <!-- Carte 2 : Profil -->
-      <section class="card">
-        <h2>Résumé du profil</h2>
-        <p id="profile-summary">
-          Exemple : professionnel de santé ou chercheur africain, avec un parcours
-          en cours de structuration. Le détail de vos réponses sera pris en compte
-          de manière dynamique dans cette section.
-        </p>
-        <p class="muted" id="profile-email">
-          Email : non renseigné • Ce rapport reste indicatif et devra être revu
-          avec un conseiller MedBridge Africa.
-        </p>
-      </section>
-
-      <!-- Carte 3 : Indicateurs académiques et professionnels -->
-      <section class="card">
-        <h2>Indicateurs académiques et professionnels</h2>
-        <ul id="metrics-list">
-          <li>Publications : exemple (0 renseignées)</li>
-          <li>Citations : exemple (0)</li>
-          <li>Prix / distinctions : exemple (non renseigné)</li>
-        </ul>
-      </section>
-
-      <!-- Carte 4 : Projet & impact -->
-      <section class="card">
-        <h2>Projet et impact proposé</h2>
-        <p id="project-text">
-          Exemple : projet en cours de description. Le rapport final reprendra vos
-          réponses sur le secteur, le lieu et l’impact envisagé aux États-Unis.
-        </p>
-      </section>
-
-      <!-- Carte 5 : Recommandations -->
-      <section class="card">
-        <h2>Recommandations principales</h2>
-        <ul id="reco-list">
-          <li>Consolider les lettres de recommandation (US si possible).</li>
-          <li>
-            Documenter l’impact national et l’alignement avec les priorités
-            américaines (santé publique, innovation, IA, underserved populations).
-          </li>
-          <li>
-            Planifier 12–18 mois de publications et communications stratégiques
-            avant dépôt du dossier.
-          </li>
-        </ul>
-        <p class="muted">
-          Ces recommandations seront adaptées automatiquement en fonction des
-          informations que vous avez fournies dans le formulaire complet.
-        </p>
-
-        <a href="evaluation-form.html" class="btn-link">
-          ← Revenir au formulaire
-        </a>
-
-        <div style="text-align:center;">
-          <button onclick="window.print()" class="pdf-btn">
-            📄 Télécharger ce rapport en PDF
-          </button>
-        </div>
-
-        <div style="text-align:center;">
-          <button onclick="sendReportByEmail()" class="pdf-btn">
-            ✉️ M’envoyer ce rapport par email
-          </button>
-        </div>
-
-        <p class="note-placeholder" id="placeholder-note">
-          Aucune donnée trouvée dans le navigateur (exemple par défaut affiché).
-        </p>
-      </section>
-
-      <!-- Carte 6 : Call-to-Action MedBridge Africa -->
-      <section class="card">
-        <h2>Étape suivante avec MedBridge Africa</h2>
- <p>
-  Cette pré-évaluation vous donne une première photographie de votre profil.
-  Pour transformer ce score en une véritable stratégie EB-1A / EB-2 NIW,
-  adaptée à votre parcours et à votre contexte africain, MedBridge Africa
-  vous accompagne étape par étape :
-</p>
-
-
-        <div class="cta-container">
-          <a
-            href="https://calendly.com/adama-ndir/30min"
-            class="cta-main"
-            target="_blank"
-            rel="noreferrer"
-          >
-            📅 Réserver un appel de 30 minutes
-          </a>
-
-          <a
-            class="cta-secondary"
-            href="https://wa.me/221771609016"
-            target="_blank"
-            rel="noreferrer"
-          >
-            💬 Discuter sur WhatsApp
-          </a>
-
-          <a
-            class="cta-secondary"
-            href="mailto:contact@healthacademia.shop"
-          >
-            📧 Envoyer un email à MedBridge Africa
-          </a>
-
-          <a class="cta-secondary" href="#">
-            ⭐ Demander une analyse experte EB-1A / EB-2 NIW (réservée aux
-            clients abonnés)
-          </a>
-        </div>
-
-        <p class="muted" style="margin-top:16px;">
-          🔒 L’analyse détaillée EB-1A / EB-2 NIW (avec grille experte et revue
-          de dossier) est réservée aux personnes qui acceptent une consultation
-          ou souscrivent à un pack d’accompagnement MedBridge Africa.
-        </p>
-      </section>
+      <p class="footer-note">
+        Le rapport généré est indicatif et ne constitue pas un avis juridique.
+        Il sera affiné lors d’un échange avec MedBridge Africa.
+      </p>
     </main>
 
-    <footer>
-      © <span id="year"></span> MedBridge Africa. Tous droits réservés.
-    </footer>
-
     <script>
-      function sendReportByEmail() {
-        try {
-          const raw = localStorage.getItem("mba_eval_result_v1");
-          if (!raw) {
+      document.addEventListener("DOMContentLoaded", function () {
+        const submitBtn = document.getElementById("submit-btn");
+
+        function computeScore(data) {
+          let score = 0;
+
+          // Programme
+          if (data.program === "EB1-A") {
+            score += 10;
+          } else if (data.program === "EB2-NIW") {
+            score += 8;
+          }
+
+          // Niveau d’études
+          switch (data.education) {
+            case "Licence":
+              score += 5;
+              break;
+            case "Master":
+              score += 8;
+              break;
+            case "Doctorat":
+              score += 12;
+              break;
+            default:
+              score += 3;
+          }
+
+          // Années d’expérience
+          const years = data.years || 0;
+          if (years > 0) {
+            score += Math.min(years, 20); // 1 point par année, max 20
+          }
+          if (years >= 10) {
+            score += 5;
+          }
+
+          // Publications
+          const pubs = data.pubs || 0;
+          if (pubs === 0) {
+            score += 0;
+          } else if (pubs <= 2) {
+            score += 5;
+          } else if (pubs <= 5) {
+            score += 10;
+          } else if (pubs <= 10) {
+            score += 15;
+          } else {
+            score += 20;
+          }
+
+          // Citations
+          const cites = data.cites || 0;
+          if (cites === 0) {
+            score += 0;
+          } else if (cites <= 50) {
+            score += 5;
+          } else if (cites <= 200) {
+            score += 10;
+          } else {
+            score += 15;
+          }
+
+          // Prix / distinctions
+          const awards = data.awards || 0;
+          if (awards > 0) {
+            score += 8;
+          }
+
+          // Qualité du résumé / projet (longueur)
+          const summaryLen = (data.summary || "").trim().length;
+          if (summaryLen >= 200 && summaryLen < 400) {
+            score += 5;
+          } else if (summaryLen >= 400) {
+            score += 8;
+          }
+
+          const projectLen = (data.projectDesc || "").trim().length;
+          if (projectLen >= 200 && projectLen < 400) {
+            score += 5;
+          } else if (projectLen >= 400) {
+            score += 8;
+          }
+
+          // Cap à 100
+          if (score > 100) score = 100;
+          if (score < 0) score = 0;
+          return Math.round(score);
+        }
+
+        function buildProgramGuess(score, program) {
+          if (score >= 85) {
+            return "Très fort potentiel pour un dossier EB1-A / EB2-NIW.";
+          }
+          if (score >= 70) {
+            return "Potentiel EB2-NIW avec des éléments à renforcer pour EB1-A.";
+          }
+          if (score >= 50) {
+            return "Profil en consolidation, EB2-NIW envisageable à moyen terme.";
+          }
+          return "Profil initial, plusieurs éléments restent à développer avant un dossier EB2-NIW / EB1-A.";
+        }
+
+        function buildRecommendations(data, score) {
+          const recos = [];
+
+          if (data.pubs === 0) {
+            recos.push(
+              "Renforcer le volume de publications (idéalement ≥ 3–5 articles indexés) dans votre domaine de spécialité."
+            );
+          } else if (data.pubs < 5) {
+            recos.push(
+              "Poursuivre les publications dans des revues visibles (indexées, comité de lecture) pour consolider la dimension académique."
+            );
+          }
+
+          if (data.awards === 0) {
+            recos.push(
+              "Identifier et documenter tout prix, bourse ou distinction (même régionale ou nationale) pour renforcer les preuves d’excellence."
+            );
+          }
+
+          if (!data.summary || data.summary.trim().length < 200) {
+            recos.push(
+              "Clarifier davantage votre rôle, vos responsabilités et vos contributions spécifiques (impact, leadership, innovation)."
+            );
+          }
+
+          if (!data.projectDesc || data.projectDesc.trim().length < 200) {
+            recos.push(
+              "Développer davantage la description du projet envisagé aux États-Unis (bénéficiaires, impact national, indicateurs mesurables)."
+            );
+          }
+
+          if (score < 70) {
+            recos.push(
+              "Prévoir 12–18 mois de stratégie de visibilité (publications, conférences, collaborations, implication dans des réseaux professionnels)."
+            );
+          }
+
+          if (recos.length === 0) {
+            recos.push(
+              "Votre profil semble déjà bien structuré. Un travail fin restera nécessaire pour aligner le dossier avec les critères formels EB1-A / EB2-NIW."
+            );
+          }
+
+          return recos;
+        }
+
+        submitBtn.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const program = (document.getElementById("program").value || "").trim();
+          const fullName = (document.getElementById("fullName").value || "").trim();
+          const email = (document.getElementById("email").value || "").trim();
+          const education = (document.getElementById("education").value || "").trim();
+          const years = Number(document.getElementById("years").value || "0");
+          const country = (document.getElementById("country").value || "").trim();
+          const summary = (document.getElementById("summary").value || "").trim();
+
+          const pubs = Number(document.getElementById("pubs").value || "0");
+          const cites = Number(document.getElementById("cites").value || "0");
+          const awards = Number(document.getElementById("awards").value || "0");
+
+          const sector = (document.getElementById("sector").value || "").trim();
+          const location = (document.getElementById("location").value || "").trim();
+          const projectDesc = (document.getElementById("project").value || "").trim();
+
+          if (!program || !fullName || !email) {
             alert(
-              "Aucune donnée de pré-évaluation n'a été trouvée dans ce navigateur."
+              "Merci de renseigner au minimum le programme visé, votre nom complet et votre adresse e-mail."
             );
             return;
           }
 
-          fetch("/.netlify/functions/send-mail", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: raw, // raw est déjà une chaîne JSON
-          })
-            .then((res) => res.json().catch(() => ({})))
-            .then(() => {
-              alert(
-                "Votre rapport a été transmis pour envoi par email. Vérifiez votre boîte de réception."
-              );
-            })
-            .catch((err) => {
-              console.error("Erreur d'envoi du mail:", err);
-              alert("Impossible d'envoyer l'email pour le moment.");
-            });
-        } catch (e) {
-          console.error("Erreur accès localStorage:", e);
-          alert("Impossible de lire les données du rapport.");
-        }
-      }
+          const rawData = {
+            program,
+            fullName,
+            email,
+            education,
+            years,
+            country,
+            summary,
+            pubs,
+            cites,
+            awards,
+            sector,
+            location,
+            projectDesc,
+          };
 
-      document.addEventListener("DOMContentLoaded", function () {
-        // Année footer
-        const yearSpan = document.getElementById("year");
-        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+          const score = computeScore(rawData);
+          const programGuess = buildProgramGuess(score, program);
+          const recommendations = buildRecommendations(rawData, score);
 
-        const scoreLine = document.getElementById("score-line");
-        const programGuessEl = document.getElementById("program-guess");
-        const bandTextEl = document.getElementById("band-text");
-        const profileSummaryEl = document.getElementById("profile-summary");
-        const profileEmailEl = document.getElementById("profile-email");
-        const metricsListEl = document.getElementById("metrics-list");
-        const projectTextEl = document.getElementById("project-text");
-        const recoListEl = document.getElementById("reco-list");
-        const placeholderNote = document.getElementById("placeholder-note");
-        const progressBar = document.getElementById("progress-bar");
+          const profile = {
+            fullName,
+            email,
+            targetProgram: program,
+            educationLevel: education,
+            yearsExperience: years,
+            country,
+            summary,
+          };
 
-        let raw = null;
-        try {
-          raw = localStorage.getItem("mba_eval_result_v1");
-        } catch (e) {
-          console.warn("Impossible de lire localStorage:", e);
-        }
+          const metrics = {
+            publications: pubs,
+            citations: cites,
+            awards,
+          };
 
-        if (!raw) {
-          // On garde l'exemple par défaut
-          if (placeholderNote) {
-            placeholderNote.textContent =
-              "Aucune donnée trouvée dans le navigateur (exemple par défaut affiché).";
+          const project = {
+            sector,
+            location,
+            description: projectDesc,
+          };
+
+          const payload = {
+            score,
+            programGuess,
+            profile,
+            metrics,
+            project,
+            recommendations,
+          };
+
+          try {
+            localStorage.setItem(
+              "mba_eval_result_v1",
+              JSON.stringify(payload)
+            );
+            console.log("[EVAL-FR] Données stockées:", payload);
+          } catch (err) {
+            console.warn("Impossible d'écrire dans localStorage:", err);
           }
-          return;
-        }
 
-        let data = null;
-        try {
-          data = JSON.parse(raw);
-        } catch (e) {
-          console.warn("JSON invalide dans mba_eval_result_v1:", e);
-          if (placeholderNote) {
-            placeholderNote.textContent =
-              "Erreur lors du chargement des données. Exemple par défaut affiché.";
-          }
-          return;
-        }
-
-        const score = typeof data.score === "number" ? data.score : 0;
-        const programGuess = data.programGuess || "Profil en construction";
-        const profile = data.profile || {};
-        const metrics = data.metrics || {};
-        const project = data.project || {};
-        const recos = Array.isArray(data.recommendations)
-          ? data.recommendations
-          : [];
-
-        // --- Bande d'interprétation ---
-        if (score >= 85) {
-          bandLabel =
-            "Profil très solide pour un dossier EB-1A / EB-2 NIW accompagné.";
-          bandDetail =
-            "Vous disposez déjà d’un track record fort. L’enjeu principal sera de structurer vos preuves et votre narration de manière stratégique avec l’appui d’un expert et, le cas échéant, d’un avocat spécialisé.";
-        } else if (score >= 70) {
-          bandLabel =
-            "Bon potentiel pour un EB-2 NIW, avec possibilité d’envisager un EB-1A à moyen terme.";
-          bandDetail =
-            "Votre profil présente plusieurs forces. Un travail ciblé sur l’impact, le leadership et la visibilité internationale peut vous rapprocher d’un dossier EB-1A compétitif.";
-        } else if (score >= 55) {
-          bandLabel =
-            "Profil en bonne voie pour un EB-2 NIW, mais nécessitant encore du renforcement.";
-          bandDetail =
-            "Il sera utile de planifier, sur 12–24 mois, des actions concrètes (publications, responsabilités formelles, collaborations internationales, projet structuré aux États-Unis) avant d’envisager un dépôt de dossier.";
-        } else {
-          bandLabel =
-            "Profil encore précoce pour un EB-1A / EB-2 NIW à court terme.";
-          bandDetail =
-            "La priorité est de construire un CV plus robuste (publications, distinctions, responsabilités clés, projet à fort impact) avant d’investir dans une stratégie d’immigration qualifiée.";
-        }
-
-
-        // --- Score & programme ---
-        if (scoreLine) scoreLine.textContent = `${score} / 100`;
-        if (programGuessEl) programGuessEl.textContent = programGuess;
-        if (bandTextEl) bandTextEl.textContent = `${bandLabel} ${bandDetail}`;
-        if (progressBar) progressBar.style.width = `${Math.max(
-          0,
-          Math.min(100, score)
-        )}%`;
-
-        // --- Résumé du profil ---
-        const name = profile.full_name || "Candidat(e)";
-        const email = profile.email || "";
-        const country = profile.country || "Pays non précisé";
-        const education = profile.education || "Niveau non précisé";
-        const years =
-          typeof profile.years === "number" ? profile.years : null;
-        const summary = profile.summary || "";
-
-        let profileText = `${name} envisage une stratégie d’immigration qualifiée ${
-  profile.program || ""
-} avec un niveau académique ${education.toLowerCase()}.`;
-
-        if (years !== null) {
-          profileText += ` Expérience post-diplôme : environ ${years} an(s).`;
-        }
-        profileText += ` Pays / contexte principal : ${country}.`;
-        if (summary && summary.trim().length > 0) {
-          profileText += `\n\nRésumé du parcours : ${summary}`;
-        }
-
-        if (profileSummaryEl) {
-          profileSummaryEl.textContent = profileText;
-        }
-        if (profileEmailEl) {
-          profileEmailEl.textContent = email
-            ? `Email : ${email} • Ce rapport reste indicatif et devra être revu avec un conseiller MedBridge Africa.`
-            : `Email : non renseigné • Ce rapport reste indicatif et devra être revu avec un conseiller MedBridge Africa.`;
-        }
-
-        // --- Indicateurs académiques & pro ---
-        if (metricsListEl) {
-          metricsListEl.innerHTML = "";
-          const pubs = metrics.pubs ?? 0;
-          const cites = metrics.cites ?? 0;
-          const awards = metrics.awards;
-
-          const liP = document.createElement("li");
-          liP.textContent = `Publications : ${pubs} (un volume plus élevé et mieux indexé renforce fortement le dossier).`;
-          metricsListEl.appendChild(liP);
-
-          const liC = document.createElement("li");
-          liC.textContent = `Citations : ${cites} (l’impact bibliométrique documente la reconnaissance scientifique).`;
-          metricsListEl.appendChild(liC);
-
-          const liA = document.createElement("li");
-          liA.textContent = awards
-            ? "Prix / distinctions : des éléments ont été mentionnés; à documenter finement (contexte, portée, jury)."
-            : "Prix / distinctions : aucun élément détaillé pour le moment (opportunité de renforcer ce volet).";
-          metricsListEl.appendChild(liA);
-        }
-
-        // --- Projet & impact ---
-        if (projectTextEl) {
-          if (project.summary) {
-            projectTextEl.textContent = `Secteur : ${
-              project.sector || "non précisé"
-            }. Lieu / contexte ciblé : ${
-              project.place || "non précisé"
-            }.\n\nRésumé du projet : ${project.summary}`;
-          } else {
-            projectTextEl.textContent =
-              "Votre projet n’est pas encore décrit en détail dans le formulaire. Pensez à préciser le secteur, le lieu et les impacts attendus aux États-Unis.";
-          }
-        }
-
-        // --- Recommandations ---
-        if (recoListEl && recos.length > 0) {
-          recoListEl.innerHTML = "";
-          recos.forEach((r) => {
-            const li = document.createElement("li");
-            li.textContent = r;
-            recoListEl.appendChild(li);
-          });
-        }
-
-        // --- Note de bas de carte ---
-        if (placeholderNote) {
-          placeholderNote.textContent =
-            "Données chargées depuis le navigateur. Rapport personnalisé affiché.";
-        }
+          alert(
+            "Merci ! Vos informations ont été enregistrées.\nVous allez maintenant voir un rapport indicatif basé sur vos réponses."
+          );
+          window.location.href = "evaluation-report.html";
+        });
       });
     </script>
   </body>

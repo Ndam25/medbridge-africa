@@ -1,5 +1,3 @@
-// app/en/contact/page.tsx
-
 export default function ContactPageEn() {
   return (
     <main className="max-w-3xl mx-auto px-4 py-24 space-y-8">

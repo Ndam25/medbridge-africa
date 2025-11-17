@@ -1,5 +1,3 @@
-// app/en/login/page.tsx
-
 export default function LoginPageEn() {
   return (
     <main className="max-w-xl mx-auto px-4 py-24 space-y-6">

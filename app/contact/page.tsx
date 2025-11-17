@@ -1,6 +1,6 @@
 'use client';
 import { useState, useMemo } from 'react';
-import { useParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 type Lang = 'fr' | 'en';
 
@@ -17,7 +17,7 @@ const DICT = {
     success: '✅ Merci, votre message a été envoyé avec succès.',
     errorA: '❌ Une erreur s’est produite. Veuillez réessayer ou écrire à ',
     errorLink: 'contact@healthacademia.shop',
-    switch: 'English',
+    methodError: 'Méthode non autorisée',
   },
   en: {
     title: 'Contact Us',
@@ -31,13 +31,13 @@ const DICT = {
     success: '✅ Thanks! Your message has been sent successfully.',
     errorA: '❌ An error occurred. Please try again or email ',
     errorLink: 'contact@healthacademia.shop',
-    switch: 'Français',
+    methodError: 'Method not allowed',
   },
 } as const;
 
 export default function ContactPage() {
-  const params = useParams<{ lang: Lang }>();
-  const lang: Lang = params?.lang === 'en' ? 'en' : 'fr';
+  const params = useSearchParams();
+  const lang = (params.get('lang') as Lang) === 'en' ? 'en' : 'fr';
   const t = useMemo(() => DICT[lang], [lang]);
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
@@ -78,14 +78,20 @@ export default function ContactPage() {
     }
   };
 
-  const other = lang === 'fr' ? 'en' : 'fr';
+  // Simple language switcher
+  const switchTo = lang === 'fr' ? 'en' : 'fr';
+  const switchLabel = lang === 'fr' ? 'English' : 'Français';
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-12">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">{t.title}</h1>
-        <a href={`/${other}/contact`} className="text-sm underline hover:opacity-80">
-          {t.switch}
+        <a
+          href={`?lang=${switchTo}`}
+          className="text-sm underline hover:opacity-80"
+          aria-label={`Switch to ${switchLabel}`}
+        >
+          {switchLabel}
         </a>
       </div>
 
@@ -156,7 +162,7 @@ export default function ContactPage() {
           disabled={status === 'sending'}
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-60"
         >
-          {status === 'sending' ? (lang === 'fr' ? 'Envoi...' : 'Sending...') : (lang === 'fr' ? 'Envoyer' : 'Send')}
+          {status === 'sending' ? t.sending : t.send}
         </button>
       </form>
 
@@ -174,3 +180,4 @@ export default function ContactPage() {
     </main>
   );
 }
+

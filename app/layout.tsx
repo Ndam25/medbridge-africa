@@ -1,30 +1,30 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import './globals.css'
+// app/layout.tsx
 
-const inter = Inter({ subsets: ['latin'] })
+import "./globals.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-export const metadata: Metadata = {
-  title: 'MedBridge Africa',
-  description: "Le pont entre l'excellence africaine et la réussite aux États-Unis.",
-}
+export const metadata = {
+  title: "MedBridge Africa",
+  description:
+    "Passerelle entre les talents de santé africains et les opportunités académiques et professionnelles aux États-Unis.",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="fr">
-      <body className={inter.className}>
+      <body className="bg-slate-50 text-slate-900">
         <Navbar />
-        <main className="min-h-[calc(100vh-160px)]">
+        <div className="min-h-screen">
           {children}
-        </main>
+        </div>
         <Footer />
       </body>
     </html>
-  )
+  );
 }
+

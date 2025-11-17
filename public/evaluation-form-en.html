@@ -457,34 +457,77 @@ const payload = {
         )}%`;
 
         // --- Profile summary ---
-        const name = profile.full_name || "Candidate";
-        const email = profile.email || "";
-        const country = profile.country || "Country not specified";
-        const education = profile.education || "Education level not specified";
-        const years =
-          typeof profile.years === "number" ? profile.years : null;
-        const summary = profile.summary || "";
+const profile = data.profile || {};
+const metrics = data.metrics || {};
+const project = data.project || {};
+const recos = Array.isArray(data.recommendations)
+  ? data.recommendations
+  : [];
 
-        let profileText = `${name} is considering a skilled immigration strategy ${
-  profile.program || ""
-} with an academic level of ${education.toLowerCase()}.`;
+// --- Interpretation strip ---
+let bandLabel = "";
+let bandDetail = "";
 
-        if (years !== null) {
-          profileText += ` Post-graduate experience: approximately ${years} year(s).`;
-        }
-        profileText += ` Main country / context: ${country}.`;
-        if (summary && summary.trim().length > 0) {
-          profileText += `\n\nBackground summary : ${summary}`;
-        }
+if (score >= 85) {
+  bandLabel = "Very solid profile for an EB-1A / EB-2 NIW case.";
+  bandDetail =
+    "You already have a strong track record. The main challenge will be to strategically structure your evidence and narrative with the support of an expert and, if necessary, an attorney.";
+} else if (score >= 70) {
+  bandLabel =
+    "Good potential for an EB-2 NIW, with the possibility of aiming for EB-1A in the medium term.";
+  bandDetail =
+    "Your profile has several strengths. Targeted work on impact, leadership, and international visibility can bring you closer to a competitive EB-1A case.";
+} else if (score >= 55) {
+  bandLabel =
+    "Profile on the right track for an EB-2 NIW, but still needs strengthening.";
+  bandDetail =
+    "It will be useful to plan, over 12–24 months, concrete actions (publications, responsibilities, collaborations, U.S. project) before filing.";
+} else {
+  bandLabel =
+    "Profile still early for an EB-1A / EB-2 NIW in the short term.";
+  bandDetail =
+    "The priority is to build a stronger CV (publications, distinctions, key responsibilities, high-impact project) before investing in a qualified immigration strategy.";
+}
 
-        if (profileSummaryEl) {
-          profileSummaryEl.textContent = profileText;
-        }
-        if (profileEmailEl) {
-          profileEmailEl.textContent = email
-            ? `Email : ${email} • This report remains indicative and will need to be reviewed with a MedBridge Africa advisor.`
-            : `Email : not provided • This report remains indicative and will need to be reviewed with a MedBridge Africa advisor.`;
-        }
+// --- Score & programme ---
+if (scoreLine) scoreLine.textContent = `${score} / 100`;
+if (programGuessEl) programGuessEl.textContent = programGuess;
+if (bandTextEl) bandTextEl.textContent = `${bandLabel} ${bandDetail}`;
+if (progressBar)
+  progressBar.style.width = `${Math.max(0, Math.min(100, score))}%`;
+
+// --- Profile summary ---
+// ⚠️ Aligné avec ce que le formulaire EN enregistre
+const name = profile.fullName || "Candidate";
+const email = profile.email || "";
+const country = profile.country || "Country not specified";
+const education =
+  profile.educationLevel || "Education level not specified";
+const years =
+  typeof profile.yearsExperience === "number"
+    ? profile.yearsExperience
+    : null;
+const summary = profile.summary || "";
+const targetProgram = profile.targetProgram || "";
+
+let profileText = `${name} is considering a skilled immigration strategy ${targetProgram} with an academic level of ${education.toLowerCase()}.`;
+if (years !== null) {
+  profileText += ` Post-graduate experience: approximately ${years} year(s).`;
+}
+profileText += ` Main country / context: ${country}.`;
+if (summary && summary.trim().length > 0) {
+  profileText += `\n\nBackground summary: ${summary}`;
+}
+
+if (profileSummaryEl) {
+  profileSummaryEl.textContent = profileText;
+}
+if (profileEmailEl) {
+  profileEmailEl.textContent = email
+    ? `Email: ${email} • This report is indicative and should be reviewed with a MedBridge Africa advisor.`
+    : `Email: not provided • This report is indicative and should be reviewed with a MedBridge Africa advisor.`;
+}
+
 
         // --- Academic & professional indicators ---
         if (metricsListEl) {

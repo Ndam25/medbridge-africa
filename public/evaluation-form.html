@@ -9,304 +9,431 @@
       rel="stylesheet"
     />
     <style>
-      .section-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-      .form-section {
-        margin-bottom: 20px;
-        padding: 15px;
-        background-color: #f9fafb;
-        border-radius: 8px;
-      }
+      .step { display: none; }
+      .step.active { display: block; }
       .btn-primary {
         background-color: #0d9488;
         color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
+        padding: 10px 18px;
+        border-radius: 999px;
         cursor: pointer;
+        font-weight: 700;
       }
-      .btn-primary:hover {
-        background-color: #0f766e;
+      .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 10px;
       }
+      .form-section {
+        margin-bottom: 18px;
+        padding: 14px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e6eef2;
+      }
+      .hint { font-size:0.85rem; color:#64748b; margin-top:6px; }
+      #progressBar {
+        height: 8px;
+        background: #e6eef2;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      #progressBar > div { height: 100%; background: linear-gradient(90deg,#0d9488,#059669); width: 0%; transition: width .3s ease; }
     </style>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-gray-50">
     <div class="max-w-3xl mx-auto p-6">
-      <h1 class="text-3xl font-bold text-center mb-6">
-        Formulaire d’Évaluation EB-1A / EB-2 NIW
-      </h1>
+      <h1 class="text-3xl font-bold text-center mb-4">Formulaire d’Évaluation EB-1A / EB-2 NIW</h1>
+      <p class="text-center mb-6 text-gray-600">Remplissez ce formulaire pour recevoir une pré-évaluation indicative de votre admissibilité EB-1A / EB-2 NIW par MedBridge Africa. Ce rapport est informatif et non-contraignant.</p>
 
-      <p class="text-center mb-6 text-gray-600">
-        Remplissez ce formulaire pour recevoir une pré-évaluation de votre
-        admissibilité EB-1A / EB-2 NIW par MedBridge Africa.
-      </p>
+      <!-- Progress -->
+      <div class="mb-4">
+        <div id="progressBar"><div></div></div>
+        <div class="text-right text-sm text-gray-500 mt-1" id="progressText">Étape 1 / 5</div>
+      </div>
 
-      <form id="evaluationForm" class="space-y-6">
-        <!-- SECTION 1 – PROFIL -->
-        <div class="form-section">
+      <form id="evaluationForm" class="space-y-6" novalidate>
+        <!-- STEP 1 -->
+        <div class="form-section step active" data-step="1">
           <h2 class="section-title">1️⃣ Profil du candidat</h2>
 
-          <label class="block mb-2 font-medium">Nom complet</label>
-          <input
-            type="text"
-            name="fullName"
-            class="w-full p-2 border rounded"
-            required
-          />
+          <label class="block mt-2 font-medium" for="program">Catégorie cible *</label>
+          <select id="program" name="program" class="w-full p-2 border rounded" required>
+            <option value="">— sélectionner —</option>
+            <option value="EB1-A">EB1-A (Extraordinary Ability)</option>
+            <option value="EB2-NIW">EB2-NIW (National Interest Waiver)</option>
+          </select>
 
-          <label class="block mt-4 mb-2 font-medium">Email</label>
-          <input
-            type="email"
-            name="email"
-            class="w-full p-2 border rounded"
-            required
-          />
+          <label class="block mt-3 font-medium" for="fullName">Nom complet *</label>
+          <input id="fullName" name="fullName" type="text" class="w-full p-2 border rounded" required />
 
-          <label class="block mt-4 mb-2 font-medium"
-            >Pays de résidence</label
-          >
-          <input
-            type="text"
-            name="country"
-            class="w-full p-2 border rounded"
-            required
-          />
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block mt-3 font-medium" for="email">Email *</label>
+              <input id="email" name="email" type="email" class="w-full p-2 border rounded" required />
+            </div>
+            <div>
+              <label class="block mt-3 font-medium" for="country">Pays d'exercice / résidence *</label>
+              <input id="country" name="country" type="text" class="w-full p-2 border rounded" placeholder="ex: Senegal" required />
+            </div>
+          </div>
 
-          <label class="block mt-4 mb-2 font-medium"
-            >Profession actuelle</label
-          >
-          <input
-            type="text"
-            name="currentPosition"
-            class="w-full p-2 border rounded"
-            required
-          />
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block mt-3 font-medium" for="education">Diplôme le plus élevé *</label>
+              <select id="education" name="education" class="w-full p-2 border rounded" required>
+                <option value="">— sélectionner —</option>
+                <option value="Licence">Licence / Bachelor</option>
+                <option value="Master">Master</option>
+                <option value="Doctorat">Doctorat / PhD</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mt-3 font-medium" for="years">Années d'expérience professionnelle *</label>
+              <input id="years" name="years" type="number" min="0" value="0" class="w-full p-2 border rounded" required />
+            </div>
+          </div>
+
+          <label class="block mt-3 font-medium" for="currentPosition">Profession / poste actuel</label>
+          <input id="currentPosition" name="currentPosition" type="text" class="w-full p-2 border rounded" />
+
+          <label class="block mt-3 font-medium" for="summary">Résumé du profil (2–6 lignes)</label>
+          <textarea id="summary" name="summary" class="w-full p-2 border rounded" rows="4" placeholder="Décrivez brièvement votre rôle, responsabilités et réalisations clés"></textarea>
         </div>
 
-        <!-- SECTION 2 – INDICATEURS ACADÉMIQUES -->
-        <div class="form-section">
-          <h2 class="section-title">2️⃣ Indicateurs académiques</h2>
+        <!-- STEP 2 -->
+        <div class="form-section step" data-step="2">
+          <h2 class="section-title">2️⃣ Indicateurs académiques et professionnels</h2>
 
-          <label class="block mb-2 font-medium">Nombre de publications</label>
-          <input
-            type="number"
-            name="publications"
-            class="w-full p-2 border rounded"
-          />
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-medium" for="publications">Nombre de publications</label>
+              <input id="publications" name="publications" type="number" min="0" value="0" class="w-full p-2 border rounded" />
+              <div class="hint">Inclure articles indexés, chapitres, rapports techniques.</div>
+            </div>
 
-          <label class="block mt-4 mb-2 font-medium">Citations Google Scholar</label>
-          <input
-            type="number"
-            name="citations"
-            class="w-full p-2 border rounded"
-          />
+            <div>
+              <label class="block font-medium" for="citations">Citations (Google Scholar approx.)</label>
+              <input id="citations" name="citations" type="number" min="0" value="0" class="w-full p-2 border rounded" />
+              <div class="hint">Estimation depuis Google Scholar / Scopus si disponible.</div>
+            </div>
+          </div>
 
-          <label class="block mt-4 mb-2 font-medium">Prix / Distinctions</label>
-          <input
-            type="text"
-            name="awards"
-            class="w-full p-2 border rounded"
-          />
+          <label class="block mt-3 font-medium" for="awards">Prix / distinctions (nombre)</label>
+          <input id="awards" name="awards" type="number" min="0" value="0" class="w-full p-2 border rounded" />
         </div>
 
-        <!-- SECTION 3 – PROJET NIW -->
-        <div class="form-section">
-          <h2 class="section-title">3️⃣ Projet (EB-2 NIW)</h2>
+        <!-- STEP 3 -->
+        <div class="form-section step" data-step="3">
+          <h2 class="section-title">3️⃣ Projet & impact (EB-2 NIW)</h2>
 
-          <label class="block mb-2 font-medium"
-            >Décrivez brièvement votre projet</label
-          >
-          <textarea
-            name="project"
-            class="w-full p-2 border rounded"
-            rows="4"
-          ></textarea>
+          <label class="block mt-2 font-medium" for="sector">Secteur / domaine</label>
+          <input id="sector" name="sector" type="text" class="w-full p-2 border rounded" placeholder="ex: Santé publique, IA pour la santé" />
 
-          <label class="block mt-4 mb-2 font-medium"
-            >Impact prévu aux États-Unis</label
-          >
-          <textarea
-            name="impact"
-            class="w-full p-2 border rounded"
-            rows="3"
-          ></textarea>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block mt-3 font-medium" for="location">Lieu / contexte prévu aux États-Unis</label>
+              <input id="location" name="location" type="text" class="w-full p-2 border rounded" placeholder="ex: université, hôpital, programme" />
+            </div>
+            <div>
+              <label class="block mt-3 font-medium" for="targetBeneficiaries">Bénéficiaires (court)</label>
+              <input id="targetBeneficiaries" name="targetBeneficiaries" type="text" class="w-full p-2 border rounded" placeholder="ex: populations rurales, systèmes de santé" />
+            </div>
+          </div>
+
+          <label class="block mt-3 font-medium" for="project">Résumé du projet (10–15 lignes)</label>
+          <textarea id="project" name="project" class="w-full p-2 border rounded" rows="6" placeholder="Décrire le projet, activités prévues et impact attendu"></textarea>
         </div>
 
-        <!-- SUBMIT -->
-        <button type="submit" class="btn-primary w-full text-center">
-          📤 Soumettre l’évaluation
-        </button>
+        <!-- STEP 4 -->
+        <div class="form-section step" data-step="4">
+          <h2 class="section-title">4️⃣ Preuves & documents (optionnel)</h2>
+          <p class="text-sm text-gray-600 mb-3">Les fichiers permettent de garder des traces ; l'envoi final peut se faire plus tard via e-mail si nécessaire.</p>
+
+          <label class="block font-medium" for="cvFile">CV / Lettre de motivation (pdf/docx)</label>
+          <input id="cvFile" name="cvFile" type="file" class="w-full p-2 border rounded" accept=".pdf,.doc,.docx" />
+
+          <label class="block mt-3 font-medium" for="otherFiles">Autres documents (lettres de recommandation, diplômes)</label>
+          <input id="otherFiles" name="otherFiles" type="file" class="w-full p-2 border rounded" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
+          <div class="hint">Taille max recommandée par fichier : 10 MB.</div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="form-section step" data-step="5">
+          <h2 class="section-title">5️⃣ Consentement & Soumission</h2>
+
+          <label class="block font-medium" for="comment">Commentaire (optionnel)</label>
+          <textarea id="comment" name="comment" class="w-full p-2 border rounded" rows="4" placeholder="Observations, contraintes, délai souhaité..."></textarea>
+
+          <label class="block mt-4">
+            <input id="confirm" name="confirm" type="checkbox" class="mr-2" required />
+            J’atteste que les informations fournies sont exactes. *
+          </label>
+        </div>
+
+        <!-- NAV BUTTONS -->
+        <div class="flex items-center justify-between">
+          <button type="button" id="prevBtn" class="px-4 py-2 border rounded text-gray-700" style="display:none;">← Précédent</button>
+          <div class="flex gap-3">
+            <button type="button" id="saveDraft" class="px-4 py-2 border rounded text-gray-700">💾 Sauvegarder</button>
+            <button type="button" id="nextBtn" class="btn-primary">Suivant →</button>
+            <button type="submit" id="submitBtn" class="btn-primary" style="display:none;">📤 Soumettre</button>
+          </div>
+        </div>
       </form>
 
-      <p class="text-center text-gray-500 mt-6 text-sm">
-        © 2025 MedBridge Africa — Tous droits réservés.
-      </p>
+      <p class="text-center text-gray-500 mt-4 text-sm">© <span id="year">2025</span> MedBridge Africa — Tous droits réservés.</p>
     </div>
 
     <script>
-  (function () {
-    function computeScore(data) {
-      let score = 0;
-      if (data.program === "EB1-A") score += 10;
-      else if (data.program === "EB2-NIW") score += 8;
+      (function(){
+        // --- scoring & recommendation logic (adapted from your original file) ---
+        function computeScore(data) {
+          let score = 0;
+          if (data.program === "EB1-A") score += 10;
+          else if (data.program === "EB2-NIW") score += 8;
 
-      switch (data.education) {
-        case "Licence":
-        case "Bachelor":
-          score += 5;
-          break;
-        case "Master":
-          score += 8;
-          break;
-        case "Doctorat":
-        case "PhD":
-          score += 12;
-          break;
-        default:
-          score += 3;
-      }
+          switch (data.education) {
+            case "Licence": case "Bachelor":
+              score += 5; break;
+            case "Master":
+              score += 8; break;
+            case "Doctorat": case "PhD":
+              score += 12; break;
+            default:
+              score += 3;
+          }
 
-      const years = Number(data.years || 0);
-      if (years > 0) score += Math.min(years, 20);
-      if (years >= 10) score += 5;
+          const years = Number(data.years || 0);
+          if (years > 0) score += Math.min(years, 20);
+          if (years >= 10) score += 5;
 
-      const pubs = Number(data.pubs || data.publications || 0);
-      if (pubs === 0) score += 0;
-      else if (pubs <= 2) score += 5;
-      else if (pubs <= 5) score += 10;
-      else if (pubs <= 10) score += 15;
-      else score += 20;
+          const pubs = Number(data.pubs || data.publications || 0);
+          if (pubs === 0) score += 0;
+          else if (pubs <= 2) score += 5;
+          else if (pubs <= 5) score += 10;
+          else if (pubs <= 10) score += 15;
+          else score += 20;
 
-      const cites = Number(data.cites || data.citations || 0);
-      if (cites === 0) score += 0;
-      else if (cites <= 50) score += 5;
-      else if (cites <= 200) score += 10;
-      else score += 15;
+          const cites = Number(data.cites || data.citations || 0);
+          if (cites === 0) score += 0;
+          else if (cites <= 50) score += 5;
+          else if (cites <= 200) score += 10;
+          else score += 15;
 
-      const awards = Number(data.awards || 0);
-      if (awards > 0) score += 8;
+          const awards = Number(data.awards || 0);
+          if (awards > 0) score += 8;
 
-      const summLen = (data.summary || data.project || "").trim().length;
-      if (summLen >= 200 && summLen < 400) score += 5;
-      else if (summLen >= 400) score += 8;
+          const summLen = (data.summary || data.project || "").trim().length;
+          if (summLen >= 200 && summLen < 400) score += 5;
+          else if (summLen >= 400) score += 8;
 
-      if (score > 100) score = 100;
-      return Math.round(score);
-    }
+          if (score > 100) score = 100;
+          return Math.round(score);
+        }
 
-    function buildProgramGuess(score) {
-      if (score >= 85) return "Très fort potentiel pour un dossier EB1-A / EB2-NIW.";
-      if (score >= 70) return "Potentiel EB2-NIW avec des éléments à renforcer pour EB1-A.";
-      if (score >= 50) return "Profil en consolidation ; EB2-NIW envisageable à moyen terme.";
-      return "Profil initial ; plusieurs éléments à développer avant EB2-NIW / EB1-A.";
-    }
+        function buildProgramGuess(score) {
+          if (score >= 85) return "Très fort potentiel pour un dossier EB1-A / EB2-NIW.";
+          if (score >= 70) return "Potentiel EB2-NIW avec des éléments à renforcer pour EB1-A.";
+          if (score >= 50) return "Profil en consolidation ; EB2-NIW envisageable à moyen terme.";
+          return "Profil initial ; plusieurs éléments à développer avant EB2-NIW / EB1-A.";
+        }
 
-    function buildRecommendations(data, score) {
-      const recos = [];
-      const pubs = Number(data.pubs || data.publications || 0);
-      const awards = Number(data.awards || 0);
-      const summary = (data.summary || data.project || "").trim();
-      if (pubs === 0) recos.push("Renforcer le volume de publications (idéalement ≥ 3–5 articles indexés).");
-      else if (pubs < 5) recos.push("Poursuivre les publications dans des revues visibles pour consolider le profil académique.");
-      if (awards === 0) recos.push("Identifier et documenter prix, bourses et distinctions.");
-      if (!summary || summary.length < 200) recos.push("Clarifier le projet et l’impact attendu (bénéficiaires, indicateurs mesurables).");
-      if (score < 70) recos.push("Prévoir 12–18 mois d’actions de visibilité (publications, conférences, collaborations).");
-      if (recos.length === 0) recos.push("Profil structuré ; travail stratégique fin nécessaire pour l’aligner sur les critères formels.");
-      return recos;
-    }
+        function buildRecommendations(data, score) {
+          const recos = [];
+          const pubs = Number(data.pubs || data.publications || 0);
+          const awards = Number(data.awards || 0);
+          const summary = (data.summary || data.project || "").trim();
 
-    // Handler submit
-    const form = document.getElementById("evaluationForm") || document.getElementById("eval-form");
-    if (!form) {
-      console.warn("Formulaire introuvable: vérifie l'id du formulaire dans public/evaluation-form.html");
-      return;
-    }
+          if (pubs === 0) recos.push("Renforcer le volume de publications (idéalement ≥ 3–5 articles indexés).");
+          else if (pubs < 5) recos.push("Poursuivre les publications dans des revues visibles pour consolider le profil académique.");
+          if (awards === 0) recos.push("Identifier et documenter prix, bourses et distinctions.");
+          if (!summary || summary.length < 200) recos.push("Clarifier le projet et l’impact attendu (bénéficiaires, indicateurs mesurables).");
+          if (score < 70) recos.push("Prévoir 12–18 mois d’actions de visibilité (publications, conférences, collaborations).");
+          if (recos.length === 0) recos.push("Profil structuré ; travail stratégique fin nécessaire pour l’aligner sur les critères formels.");
+          return recos;
+        }
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+        // --- multi-step wizard logic ---
+        const form = document.getElementById('evaluationForm');
+        const steps = Array.from(document.querySelectorAll('.step'));
+        let cur = 0;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const saveDraftBtn = document.getElementById('saveDraft');
+        const progressBarFill = document.querySelector('#progressBar > div');
+        const progressText = document.getElementById('progressText');
 
-      // récupération des champs (soutient plusieurs noms si tu as des variantes)
-      const get = (id) => {
-        const el = document.getElementById(id);
-        return el ? el.value : "";
-      };
+        function showStep(index) {
+          steps.forEach((s,i)=> s.classList.toggle('active', i===index));
+          prevBtn.style.display = index===0 ? 'none' : 'inline-block';
+          nextBtn.style.display = index===steps.length-1 ? 'none' : 'inline-block';
+          submitBtn.style.display = index===steps.length-1 ? 'inline-block' : 'none';
+          // progress
+          const pct = Math.round(((index+1)/steps.length)*100);
+          progressBarFill.style.width = pct + '%';
+          progressText.textContent = `Étape ${index+1} / ${steps.length}`;
+        }
 
-      // Try FormData fallback if fields are inputs without ids
-      let fd = {};
-      try {
-        const fdata = new FormData(form);
-        fd = Object.fromEntries(fdata.entries());
-      } catch (err) {
-        fd = {};
-      }
+        function validateStep(index) {
+          const current = steps[index];
+          const requiredEls = current.querySelectorAll('[required]');
+          for (const el of requiredEls) {
+            if (el.type === 'checkbox') {
+              if (!el.checked) { el.focus(); return {ok:false, msg: 'Veuillez cocher la case requise.'}; }
+            } else {
+              if (!el.value) { el.focus(); return {ok:false, msg: 'Veuillez remplir tous les champs obligatoires.'}; }
+              if (el.type === 'email') {
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) { el.focus(); return {ok:false, msg: 'Adresse e-mail invalide.'}; }
+              }
+              if (el.name === 'years') {
+                const v = parseInt(el.value, 10);
+                if (isNaN(v) || v < 0 || v > 60) { el.focus(); return {ok:false, msg: 'Années d\\'expérience invalide (0–60).'}; }
+              }
+            }
+          }
+          return {ok:true};
+        }
 
-      const program = get("program") || fd.program || "";
-      const fullName = get("fullName") || fd.fullName || fd.fullName || fd.fullname || "";
-      const email = get("email") || fd.email || "";
-      const education = get("education") || fd.education || fd.level || "";
-      const years = Number(get("years") || fd.years || fd.experience || 0);
-      const country = get("country") || fd.country || "";
-      const summary = get("summary") || fd.summary || fd.project || "";
+        nextBtn.addEventListener('click', ()=>{
+          const v = validateStep(cur);
+          if (!v.ok) { alert(v.msg); return; }
+          if (cur < steps.length - 1) cur++;
+          showStep(cur);
+          // autosave draft of current values
+          saveDraftLocal();
+        });
 
-      // metrics — support noms 'pubs' ou 'publications', 'cites' ou 'citations'
-      const pubs = Number(get("pubs") || get("publications") || fd.pubs || fd.publications || 0);
-      const cites = Number(get("cites") || get("citations") || fd.cites || fd.citations || 0);
-      const awards = Number(get("awards") || fd.awards || 0);
+        prevBtn.addEventListener('click', ()=>{
+          if (cur > 0) cur--;
+          showStep(cur);
+        });
 
-      const sector = get("sector") || fd.sector || "";
-      const location = get("location") || get("place") || fd.location || fd.place || "";
-      const projectDesc = get("project") || fd.project || "";
+        // Save draft to localStorage
+        function collectFormValues() {
+          const fd = {};
+          const els = form.querySelectorAll('input, select, textarea');
+          for (const el of els) {
+            if (el.type === 'file') continue; // skip files for draft
+            if (el.type === 'checkbox') fd[el.name || el.id] = el.checked;
+            else fd[el.name || el.id] = el.value;
+          }
+          return fd;
+        }
 
-      // calculs
-      const payloadForScore = {
-        program, education, years, pubs, cites, awards, summary, projectDesc
-      };
-      const score = computeScore(payloadForScore);
-      const programGuess = buildProgramGuess(score);
-      const recommendations = buildRecommendations(payloadForScore, score);
+        function saveDraftLocal() {
+          try {
+            const data = collectFormValues();
+            localStorage.setItem('mba_eval_draft_v1', JSON.stringify(data));
+            console.log('Draft saved.');
+          } catch (err) {
+            console.warn('Draft save failed', err);
+          }
+        }
 
-      // payload (même forme que EN)
-      const payload = {
-        score,
-        programGuess,
-        profile: {
-          fullName: fullName,
-          email: email,
-          country: country,
-          educationLevel: education,
-          yearsExperience: years,
-          summary: summary,
-          targetProgram: program
-        },
-        metrics: {
-          pubs: pubs,
-          cites: cites,
-          awards: awards
-        },
-        project: {
-          sector: sector,
-          place: location,
-          summary: projectDesc
-        },
-        recommendations,
-        lang: "fr"
-      };
+        saveDraftBtn.addEventListener('click', ()=>{
+          saveDraftLocal();
+          alert('Brouillon enregistré localement.');
+        });
 
-      try {
-        localStorage.setItem("mba_eval_result_v1", JSON.stringify(payload));
-        console.log("[EVAL-FR] Stored:", payload);
-      } catch (err) {
-        console.warn("Impossible d'écrire dans localStorage:", err);
-        alert("Impossible d'enregistrer localement — vérifiez les paramètres du navigateur.");
-        return;
-      }
+        // Load draft if exists
+        (function loadDraft(){
+          try {
+            const raw = localStorage.getItem('mba_eval_draft_v1');
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            for (const k in data) {
+              const el = form.querySelector('[name="'+k+'"], #'+k);
+              if (!el) continue;
+              if (el.type === 'checkbox') el.checked = !!data[k];
+              else el.value = data[k];
+            }
+            console.log('Draft loaded.');
+          } catch (err) {
+            console.warn('Draft load failed', err);
+          }
+        })();
 
-      // redirection vers le rapport FR
-      window.location.href = "evaluation-report.html";
-    });
-  })();
-</script>
+        // submit handler
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          const v = validateStep(cur);
+          if (!v.ok) { alert(v.msg); return; }
+
+          // collect values (including files as names only)
+          const get = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+          const program = get('program');
+          const fullName = get('fullName');
+          const email = get('email');
+          const education = get('education');
+          const years = Number(get('years') || 0);
+          const country = get('country');
+          const summary = get('summary');
+
+          const pubs = Number(get('publications') || 0);
+          const cites = Number(get('citations') || 0);
+          const awards = Number(get('awards') || 0);
+
+          const sector = get('sector');
+          const location = get('location');
+          const targetBeneficiaries = get('targetBeneficiaries');
+          const projectDesc = get('project');
+
+          // compute score & recos
+          const payloadForScore = {
+            program, education, years, pubs, cites, awards, summary, project: projectDesc
+          };
+          const score = computeScore(payloadForScore);
+          const programGuess = buildProgramGuess(score);
+          const recommendations = buildRecommendations(payloadForScore, score);
+
+          // build payload to store (files are NOT uploaded here; we store names if selected)
+          const fileNames = (id) => {
+            const el = document.getElementById(id);
+            if (!el || !el.files) return [];
+            return Array.from(el.files).map(f => f.name);
+          };
+
+          const payload = {
+            score,
+            programGuess,
+            profile: {
+              fullName, email, country, educationLevel: education, yearsExperience: years, summary, targetProgram: program, currentPosition: get('currentPosition')
+            },
+            metrics: { pubs, cites, awards },
+            project: { sector, location, targetBeneficiaries, summary: projectDesc },
+            files: { cv: fileNames('cvFile'), others: fileNames('otherFiles') },
+            recommendations,
+            lang: 'fr',
+            submittedAt: new Date().toISOString()
+          };
+
+          try {
+            // store result local (report page can read mba_eval_result_v1)
+            localStorage.setItem('mba_eval_result_v1', JSON.stringify(payload));
+            console.log('[EVAL-FR] Stored:', payload);
+          } catch (err) {
+            console.warn('Impossible d\\'écrire dans localStorage:', err);
+            alert('Impossible d\\'enregistrer localement — vérifiez les paramètres du navigateur.');
+            return;
+          }
+
+          // optionally: clear draft
+          try { localStorage.removeItem('mba_eval_draft_v1'); } catch(e){}
+
+          // redirect to report page (existing flow)
+          window.location.href = 'evaluation-report.html';
+        });
+
+        // initial UI
+        showStep(cur);
+
+        // set year in footer
+        const yearEl = document.getElementById('year');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+      })();
+    </script>
   </body>
 </html>

@@ -187,22 +187,19 @@
     </div>
 
     <script>
-      (function(){
-        // --- scoring & recommendation logic (adapted from your original file) ---
+      // Whole script wrapped inside DOMContentLoaded to ensure DOM is ready.
+      document.addEventListener('DOMContentLoaded', function () {
+        // --- scoring & recommendation logic (unchanged in intent) ---
         function computeScore(data) {
           let score = 0;
           if (data.program === "EB1-A") score += 10;
           else if (data.program === "EB2-NIW") score += 8;
 
           switch (data.education) {
-            case "Licence": case "Bachelor":
-              score += 5; break;
-            case "Master":
-              score += 8; break;
-            case "Doctorat": case "PhD":
-              score += 12; break;
-            default:
-              score += 3;
+            case "Licence": case "Bachelor": score += 5; break;
+            case "Master": score += 8; break;
+            case "Doctorat": case "PhD": score += 12; break;
+            default: score += 3;
           }
 
           const years = Number(data.years || 0);
@@ -225,7 +222,7 @@
           const awards = Number(data.awards || 0);
           if (awards > 0) score += 8;
 
-          const summLen = (data.summary || data.project || "").trim().length;
+          const summLen = (data.summary || data.project || "").toString().trim().length;
           if (summLen >= 200 && summLen < 400) score += 5;
           else if (summLen >= 400) score += 8;
 
@@ -244,7 +241,7 @@
           const recos = [];
           const pubs = Number(data.pubs || data.publications || 0);
           const awards = Number(data.awards || 0);
-          const summary = (data.summary || data.project || "").trim();
+          const summary = (data.summary || data.project || "").toString().trim();
 
           if (pubs === 0) recos.push("Renforcer le volume de publications (idéalement ≥ 3–5 articles indexés).");
           else if (pubs < 5) recos.push("Poursuivre les publications dans des revues visibles pour consolider le profil académique.");
@@ -255,10 +252,16 @@
           return recos;
         }
 
-        // --- multi-step wizard logic ---
+        // --- wizard logic ---
         const form = document.getElementById('evaluationForm');
+        if (!form) { console.error('Form element introuvable: #evaluationForm'); return; }
+
         const steps = Array.from(document.querySelectorAll('.step'));
-        let cur = 0;
+        if (!steps.length) { console.error('Aucune étape trouvée (.step)'); return; }
+
+        let cur = steps.findIndex(s => s.classList.contains('active'));
+        if (cur < 0) cur = 0;
+
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const submitBtn = document.getElementById('submitBtn');
@@ -267,14 +270,13 @@
         const progressText = document.getElementById('progressText');
 
         function showStep(index) {
-          steps.forEach((s,i)=> s.classList.toggle('active', i===index));
-          prevBtn.style.display = index===0 ? 'none' : 'inline-block';
-          nextBtn.style.display = index===steps.length-1 ? 'none' : 'inline-block';
-          submitBtn.style.display = index===steps.length-1 ? 'inline-block' : 'none';
-          // progress
-          const pct = Math.round(((index+1)/steps.length)*100);
-          progressBarFill.style.width = pct + '%';
-          progressText.textContent = `Étape ${index+1} / ${steps.length}`;
+          steps.forEach((s,i) => s.classList.toggle('active', i === index));
+          if (prevBtn) prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
+          if (nextBtn) nextBtn.style.display = index === steps.length - 1 ? 'none' : 'inline-block';
+          if (submitBtn) submitBtn.style.display = index === steps.length - 1 ? 'inline-block' : 'none';
+          const pct = Math.round(((index + 1) / steps.length) * 100);
+          if (progressBarFill) progressBarFill.style.width = pct + '%';
+          if (progressText) progressText.textContent = `Étape ${index + 1} / ${steps.length}`;
         }
 
         function validateStep(index) {
@@ -282,41 +284,54 @@
           const requiredEls = current.querySelectorAll('[required]');
           for (const el of requiredEls) {
             if (el.type === 'checkbox') {
-              if (!el.checked) { el.focus(); return {ok:false, msg: 'Veuillez cocher la case requise.'}; }
+              if (!el.checked) { el.focus(); return { ok: false, msg: "Veuillez cocher la case requise." }; }
             } else {
-              if (!el.value) { el.focus(); return {ok:false, msg: 'Veuillez remplir tous les champs obligatoires.'}; }
+              if (!el.value) { el.focus(); return { ok: false, msg: "Veuillez remplir tous les champs obligatoires." }; }
               if (el.type === 'email') {
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) { el.focus(); return {ok:false, msg: 'Adresse e-mail invalide.'}; }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) { el.focus(); return { ok: false, msg: "Adresse e-mail invalide." }; }
               }
               if (el.name === 'years') {
                 const v = parseInt(el.value, 10);
-                if (isNaN(v) || v < 0 || v > 60) { el.focus(); return {ok:false, msg: 'Années d\\'expérience invalide (0–60).'}; }
+                if (isNaN(v) || v < 0 || v > 60) { el.focus(); return { ok: false, msg: "Années d'expérience invalide (0–60)." }; }
               }
             }
           }
-          return {ok:true};
+          return { ok: true };
         }
 
-        nextBtn.addEventListener('click', ()=>{
+        // helper to add single listener (avoid duplicates)
+        function addOnce(el, ev, fn) {
+          if (!el) return;
+          el.removeEventListener(ev, fn);
+          el.addEventListener(ev, fn);
+        }
+
+        addOnce(nextBtn, 'click', function (evt) {
+          evt.preventDefault();
           const v = validateStep(cur);
           if (!v.ok) { alert(v.msg); return; }
           if (cur < steps.length - 1) cur++;
           showStep(cur);
-          // autosave draft of current values
           saveDraftLocal();
         });
 
-        prevBtn.addEventListener('click', ()=>{
+        addOnce(prevBtn, 'click', function (evt) {
+          evt.preventDefault();
           if (cur > 0) cur--;
           showStep(cur);
         });
 
-        // Save draft to localStorage
+        addOnce(saveDraftBtn, 'click', function () {
+          saveDraftLocal();
+          alert('Brouillon enregistré localement.');
+        });
+
+        // collect & save draft (skip files)
         function collectFormValues() {
           const fd = {};
           const els = form.querySelectorAll('input, select, textarea');
           for (const el of els) {
-            if (el.type === 'file') continue; // skip files for draft
+            if (el.type === 'file') continue;
             if (el.type === 'checkbox') fd[el.name || el.id] = el.checked;
             else fd[el.name || el.id] = el.value;
           }
@@ -333,19 +348,13 @@
           }
         }
 
-        saveDraftBtn.addEventListener('click', ()=>{
-          saveDraftLocal();
-          alert('Brouillon enregistré localement.');
-        });
-
-        // Load draft if exists
-        (function loadDraft(){
+        (function loadDraft() {
           try {
             const raw = localStorage.getItem('mba_eval_draft_v1');
             if (!raw) return;
             const data = JSON.parse(raw);
             for (const k in data) {
-              const el = form.querySelector('[name="'+k+'"], #'+k);
+              const el = form.querySelector('[name="' + k + '"], #' + k);
               if (!el) continue;
               if (el.type === 'checkbox') el.checked = !!data[k];
               else el.value = data[k];
@@ -357,39 +366,31 @@
         })();
 
         // submit handler
-        form.addEventListener('submit', function(e){
+        addOnce(form, 'submit', function (e) {
           e.preventDefault();
           const v = validateStep(cur);
           if (!v.ok) { alert(v.msg); return; }
 
-          // collect values (including files as names only)
-          const get = id => { const el = document.getElementById(id); return el ? el.value : ''; };
-          const program = get('program');
-          const fullName = get('fullName');
-          const email = get('email');
-          const education = get('education');
-          const years = Number(get('years') || 0);
-          const country = get('country');
-          const summary = get('summary');
-
-          const pubs = Number(get('publications') || 0);
-          const cites = Number(get('citations') || 0);
-          const awards = Number(get('awards') || 0);
-
-          const sector = get('sector');
-          const location = get('location');
-          const targetBeneficiaries = get('targetBeneficiaries');
-          const projectDesc = get('project');
-
-          // compute score & recos
-          const payloadForScore = {
-            program, education, years, pubs, cites, awards, summary, project: projectDesc
+          const get = id => {
+            const el = document.getElementById(id);
+            return el ? el.value : '';
           };
+
+          const payloadForScore = {
+            program: get('program'),
+            education: get('education'),
+            years: Number(get('years') || 0),
+            pubs: Number(get('publications') || 0),
+            cites: Number(get('citations') || 0),
+            awards: Number(get('awards') || 0),
+            summary: get('summary'),
+            project: get('project')
+          };
+
           const score = computeScore(payloadForScore);
           const programGuess = buildProgramGuess(score);
           const recommendations = buildRecommendations(payloadForScore, score);
 
-          // build payload to store (files are NOT uploaded here; we store names if selected)
           const fileNames = (id) => {
             const el = document.getElementById(id);
             if (!el || !el.files) return [];
@@ -400,10 +401,17 @@
             score,
             programGuess,
             profile: {
-              fullName, email, country, educationLevel: education, yearsExperience: years, summary, targetProgram: program, currentPosition: get('currentPosition')
+              fullName: get('fullName'),
+              email: get('email'),
+              country: get('country'),
+              educationLevel: get('education'),
+              yearsExperience: Number(get('years') || 0),
+              summary: get('summary'),
+              targetProgram: get('program'),
+              currentPosition: get('currentPosition')
             },
-            metrics: { pubs, cites, awards },
-            project: { sector, location, targetBeneficiaries, summary: projectDesc },
+            metrics: { pubs: Number(get('publications') || 0), cites: Number(get('citations') || 0), awards: Number(get('awards') || 0) },
+            project: { sector: get('sector'), location: get('location'), targetBeneficiaries: get('targetBeneficiaries'), summary: get('project') },
             files: { cv: fileNames('cvFile'), others: fileNames('otherFiles') },
             recommendations,
             lang: 'fr',
@@ -411,29 +419,26 @@
           };
 
           try {
-            // store result local (report page can read mba_eval_result_v1)
             localStorage.setItem('mba_eval_result_v1', JSON.stringify(payload));
+            localStorage.removeItem('mba_eval_draft_v1');
             console.log('[EVAL-FR] Stored:', payload);
           } catch (err) {
-            console.warn('Impossible d\\'écrire dans localStorage:', err);
-            alert('Impossible d\\'enregistrer localement — vérifiez les paramètres du navigateur.');
+            console.warn("Impossible d'écrire dans localStorage:", err);
+            alert("Impossible d'enregistrer localement — vérifiez les paramètres du navigateur.");
             return;
           }
 
-          // optionally: clear draft
-          try { localStorage.removeItem('mba_eval_draft_v1'); } catch(e){}
-
-          // redirect to report page (existing flow)
+          // redirect to report page
           window.location.href = 'evaluation-report.html';
         });
 
-        // initial UI
+        // initial render
         showStep(cur);
 
         // set year in footer
         const yearEl = document.getElementById('year');
         if (yearEl) yearEl.textContent = new Date().getFullYear();
-      })();
+      }); // DOMContentLoaded
     </script>
   </body>
 </html>

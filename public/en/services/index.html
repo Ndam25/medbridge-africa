@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Our Services — MedBridge Africa</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="alternate" hreflang="fr" href="https://medbridge-africa.netlify.app/services" />
+  <link rel="alternate" hreflang="en" href="https://medbridge-africa.netlify.app/en/services" />
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-4xl mx-auto flex items-center justify-between p-4">
+      <a href="/en/" class="font-bold text-lg">MedBridge Africa</a>
+      <nav class="space-x-4 text-sm">
+        <a href="/en/" class="hover:underline">Home</a>
+        <a href="/en/services" class="hover:underline font-semibold">Services</a>
+        <a href="/en/evaluation" class="hover:underline">Evaluation</a>
+        <a href="/en/login" class="hover:underline">Login</a>
+        <a href="/en/contact" class="hover:underline">Contact</a>
+        <a href="/en/about" class="hover:underline">About</a>
+        <a href="/services" class="ml-3 px-2 py-1 border rounded">FR</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-4">Our Services</h1>
+    <p class="text-gray-700 mb-4">MedBridge Africa provides practical support to health professionals and institutions aiming to work, collaborate or relocate internationally. We focus on:</p>
+
+    <ul class="list-disc pl-6 space-y-2">
+      <li><strong>Immigration assessments</strong> — EB-1A / EB-2 NIW pre-evaluations and strategy.</li>
+      <li><strong>Grant writing & project design</strong> — proposals for research and implementation.</li>
+      <li><strong>Training & capacity building</strong> — field epidemiology, nutrition, public health.</li>
+      <li><strong>Partnerships & consulting</strong> — institutional collaborations and technical assistance.</li>
+    </ul>
+
+    <div class="mt-6">
+      <a href="/en/evaluation" class="btn-primary inline-block px-4 py-2">Start an evaluation</a>
+      <a href="/en/contact" class="ml-3 underline">Contact us for details</a>
+    </div>
+  </main>
+
+  <footer class="text-center text-sm text-gray-500 p-6">
+    <div>© <span id="year">2025</span> MedBridge Africa — All rights reserved.</div>
+    <div class="mt-2"><a href="/services" class="text-blue-600">French version</a></div>
+  </footer>
+
+  <script>document.getElementById('year')?.textContent = new Date().getFullYear();</script>
+</body>
+</html>

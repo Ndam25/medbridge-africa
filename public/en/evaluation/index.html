@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EB-1A / EB-2 NIW Evaluation Form — MedBridge Africa</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="alternate" hreflang="fr" href="https://medbridge-africa.netlify.app/evaluation" />
+  <link rel="alternate" hreflang="en" href="https://medbridge-africa.netlify.app/en/evaluation" />
+  <style>
+    .step { display:none; } .step.active{ display:block; }
+    .btn-primary{ background:#0d9488;color:#fff;padding:10px 18px;border-radius:999px;font-weight:700; cursor:pointer;}
+    .form-section{ background:#fff; padding:14px; border-radius:8px; border:1px solid #e6eef2; margin-bottom:18px;}
+    #progressBar{ height:8px; background:#e6eef2; border-radius:999px; overflow:hidden;}
+    #progressBar>div{ height:100%; width:0%; transition:width .3s; background:linear-gradient(90deg,#0d9488,#059669); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-4xl mx-auto flex items-center justify-between p-4">
+      <a href="/en/" class="font-bold text-lg">MedBridge Africa</a>
+      <nav class="space-x-4 text-sm">
+        <a href="/en/" class="hover:underline">Home</a>
+        <a href="/en/services" class="hover:underline">Services</a>
+        <a href="/en/evaluation" class="hover:underline font-semibold">Evaluation</a>
+        <a href="/en/login" class="hover:underline">Login</a>
+        <a href="/en/contact" class="hover:underline">Contact</a>
+        <a href="/en/about" class="hover:underline">About</a>
+        <a href="/evaluation" class="ml-3 px-2 py-1 border rounded">FR</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center mb-4">EB-1A / EB-2 NIW Evaluation Form</h1>
+    <p class="text-center mb-6 text-gray-600">Fill this form to receive an indicative pre-evaluation of your eligibility for EB-1A / EB-2 NIW by MedBridge Africa. This is an informative assessment and not legally binding.</p>
+
+    <div class="mb-4">
+      <div id="progressBar"><div></div></div>
+      <div id="progressText" class="text-right text-sm text-gray-500 mt-1">Step 1 / 5</div>
+    </div>
+
+    <form id="evaluationForm" novalidate>
+      <!-- Step 1 -->
+      <div class="form-section step active" data-step="1">
+        <h2 class="font-semibold mb-3">1) Candidate profile</h2>
+        <label class="block">Target category *</label>
+        <select id="program" name="program" class="w-full p-2 border rounded" required>
+          <option value="">— select —</option>
+          <option value="EB1-A">EB1-A (Extraordinary Ability)</option>
+          <option value="EB2-NIW">EB2-NIW (National Interest Waiver)</option>
+        </select>
+
+        <label class="block mt-3">Full name *</label>
+        <input id="fullName" name="fullName" class="w-full p-2 border rounded" required />
+
+        <div class="grid md:grid-cols-2 gap-4 mt-3">
+          <div>
+            <label>Email *</label>
+            <input id="email" name="email" type="email" class="w-full p-2 border rounded" required />
+          </div>
+          <div>
+            <label>Country of residence *</label>
+            <input id="country" name="country" class="w-full p-2 border rounded" placeholder="e.g. Senegal" required />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-3">
+          <div>
+            <label>Highest degree *</label>
+            <select id="education" name="education" class="w-full p-2 border rounded" required>
+              <option value="">— select —</option>
+              <option value="Licence">Bachelor</option>
+              <option value="Master">Master</option>
+              <option value="Doctorat">Doctorate / PhD</option>
+              <option value="Autre">Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Years of professional experience *</label>
+            <input id="years" name="years" type="number" min="0" value="0" class="w-full p-2 border rounded" required />
+          </div>
+        </div>
+
+        <label class="block mt-3">Current position</label>
+        <input id="currentPosition" name="currentPosition" class="w-full p-2 border rounded" />
+
+        <label class="block mt-3">Profile summary (2–6 lines)</label>
+        <textarea id="summary" name="summary" class="w-full p-2 border rounded" rows="4" placeholder="Briefly describe role, responsibilities and key achievements"></textarea>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="form-section step" data-step="2">
+        <h2 class="font-semibold mb-3">2) Academic & professional indicators</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label>Number of publications</label>
+            <input id="publications" name="publications" type="number" min="0" value="0" class="w-full p-2 border rounded" />
+            <div class="text-xs text-gray-500 mt-1">Include indexed papers, chapters, technical reports.</div>
+          </div>
+          <div>
+            <label>Citations (approx. Google Scholar)</label>
+            <input id="citations" name="citations" type="number" min="0" value="0" class="w-full p-2 border rounded" />
+            <div class="text-xs text-gray-500 mt-1">Estimate from Google Scholar / Scopus if available.</div>
+          </div>
+        </div>
+
+        <label class="block mt-3">Awards / honors (number)</label>
+        <input id="awards" name="awards" type="number" min="0" value="0" class="w-full p-2 border rounded" />
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-section step" data-step="3">
+        <h2 class="font-semibold mb-3">3) Project & impact (EB-2 NIW)</h2>
+        <label>Sector / field</label>
+        <input id="sector" name="sector" class="w-full p-2 border rounded" placeholder="e.g. Public health, AI for health" />
+
+        <div class="grid md:grid-cols-2 gap-4 mt-3">
+          <div>
+            <label>Intended place / context in the US</label>
+            <input id="location" name="location" class="w-full p-2 border rounded" placeholder="e.g. university, hospital, program" />
+          </div>
+          <div>
+            <label>Target beneficiaries</label>
+            <input id="targetBeneficiaries" name="targetBeneficiaries" class="w-full p-2 border rounded" placeholder="e.g. rural populations, health systems" />
+          </div>
+        </div>
+
+        <label class="block mt-3">Project summary (10–15 lines)</label>
+        <textarea id="project" name="project" class="w-full p-2 border rounded" rows="6" placeholder="Describe the project, planned activities and expected impact"></textarea>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="form-section step" data-step="4">
+        <h2 class="font-semibold mb-3">4) Evidence & documents (optional)</h2>
+        <p class="text-sm text-gray-600">Files help keep records; final upload can be done later via email if needed.</p>
+
+        <label>CV / Cover letter (pdf/docx)</label>
+        <input id="cvFile" name="cvFile" type="file" accept=".pdf,.doc,.docx" class="w-full p-2 border rounded" />
+
+        <label class="block mt-3">Other documents (recommendation letters, diplomas)</label>
+        <input id="otherFiles" name="otherFiles" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" class="w-full p-2 border rounded" />
+        <div class="text-xs text-gray-500 mt-1">Recommended max size per file: 10 MB.</div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="form-section step" data-step="5">
+        <h2 class="font-semibold mb-3">5) Consent & Submit</h2>
+        <label>Comment (optional)</label>
+        <textarea id="comment" name="comment" class="w-full p-2 border rounded" rows="4" placeholder="Notes, constraints or preferred timing"></textarea>
+
+        <label class="block mt-4">
+          <input id="confirm" name="confirm" type="checkbox" class="mr-2" required />
+          I certify that the information provided is correct. *
+        </label>
+      </div>
+
+      <!-- Navigation -->
+      <div class="flex items-center justify-between mt-4">
+        <button type="button" id="prevBtn" class="px-4 py-2 border rounded text-gray-700" style="display:none">← Previous</button>
+        <div class="flex gap-3">
+          <button type="button" id="saveDraft" class="px-4 py-2 border rounded text-gray-700">💾 Save draft</button>
+          <button type="button" id="nextBtn" class="btn-primary">Next →</button>
+          <button type="submit" id="submitBtn" class="btn-primary" style="display:none">📤 Submit</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <footer class="text-center text-sm text-gray-500 p-6">
+    <div>© <span id="year">2025</span> MedBridge Africa — All rights reserved.</div>
+    <div class="mt-2"><a href="/evaluation" class="text-blue-600">FR version</a></div>
+  </footer>
+
+  <script>
+    // Clean English wizard script — uses double quotes for all JS strings
+    document.addEventListener("DOMContentLoaded", function () {
+      function computeScore(data) {
+        let score = 0;
+        if (data.program === "EB1-A") score += 10;
+        else if (data.program === "EB2-NIW") score += 8;
+        switch (data.education) {
+          case "Licence": case "Bachelor": score += 5; break;
+          case "Master": score += 8; break;
+          case "Doctorat": case "PhD": score += 12; break;
+          default: score += 3;
+        }
+        const years = Number(data.years || 0);
+        if (years > 0) score += Math.min(years, 20);
+        if (years >= 10) score += 5;
+        const pubs = Number(data.pubs || data.publications || 0);
+        if (pubs === 0) score += 0;
+        else if (pubs <= 2) score += 5;
+        else if (pubs <= 5) score += 10;
+        else if (pubs <= 10) score += 15;
+        else score += 20;
+        const cites = Number(data.cites || data.citations || 0);
+        if (cites === 0) score += 0;
+        else if (cites <= 50) score += 5;
+        else if (cites <= 200) score += 10;
+        else score += 15;
+        const awards = Number(data.awards || 0);
+        if (awards > 0) score += 8;
+        const summLen = (data.summary || data.project || "").toString().trim().length;
+        if (summLen >= 200 && summLen < 400) score += 5;
+        else if (summLen >= 400) score += 8;
+        if (score > 100) score = 100;
+        return Math.round(score);
+      }
+
+      function buildProgramGuess(score) {
+        if (score >= 85) return "High potential for EB1-A / EB2-NIW.";
+        if (score >= 70) return "EB2-NIW potential; strengthen elements for EB1-A.";
+        if (score >= 50) return "Profile in development; EB2-NIW possible medium-term.";
+        return "Initial profile; several items to develop before EB2-NIW / EB1-A.";
+      }
+
+      function buildRecommendations(data, score) {
+        const recos = [];
+        const pubs = Number(data.pubs || data.publications || 0);
+        const awards = Number(data.awards || 0);
+        const summary = (data.summary || data.project || "").toString().trim();
+        if (pubs === 0) recos.push("Increase publication volume (ideally ≥ 3–5 indexed articles).");
+        else if (pubs < 5) recos.push("Continue publishing in visible journals to strengthen academic profile.");
+        if (awards === 0) recos.push("Identify and document awards, grants and honors.");
+        if (!summary || summary.length < 200) recos.push("Clarify project and expected impact (beneficiaries, measurable indicators).");
+        if (score < 70) recos.push("Plan 12–18 months of visibility activities (publications, conferences, collaborations).");
+        if (recos.length === 0) recos.push("Structured profile; final strategic work needed to align with formal criteria.");
+        return recos;
+      }
+
+      const form = document.getElementById("evaluationForm");
+      const steps = Array.from(document.querySelectorAll(".step"));
+      let cur = steps.findIndex(s => s.classList.contains("active"));
+      if (cur < 0) cur = 0;
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const submitBtn = document.getElementById("submitBtn");
+      const saveDraftBtn = document.getElementById("saveDraft");
+      const progressBarFill = document.querySelector("#progressBar > div");
+      const progressText = document.getElementById("progressText");
+
+      function showStep(index) {
+        steps.forEach((s,i) => s.classList.toggle("active", i === index));
+        if (prevBtn) prevBtn.style.display = index === 0 ? "none" : "inline-block";
+        if (nextBtn) nextBtn.style.display = index === steps.length - 1 ? "none" : "inline-block";
+        if (submitBtn) submitBtn.style.display = index === steps.length - 1 ? "inline-block" : "none";
+        const pct = Math.round(((index + 1) / steps.length) * 100);
+        if (progressBarFill) progressBarFill.style.width = pct + "%";
+        if (progressText) progressText.textContent = "Step " + (index + 1) + " / " + steps.length;
+      }
+
+      function validateStep(index) {
+        const current = steps[index];
+        const requiredEls = current.querySelectorAll("[required]");
+        for (const el of requiredEls) {
+          if (el.type === "checkbox") {
+            if (!el.checked) { el.focus(); return { ok: false, msg: "Please check the required box." }; }
+          } else {
+            if (!el.value) { el.focus(); return { ok: false, msg: "Please fill all required fields." }; }
+            if (el.type === "email") {
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) { el.focus(); return { ok: false, msg: "Invalid email address." }; }
+            }
+            if (el.name === "years") {
+              const v = parseInt(el.value, 10);
+              if (isNaN(v) || v < 0 || v > 60) { el.focus(); return { ok: false, msg: "Years of experience invalid (0–60)." }; }
+            }
+          }
+        }
+        return { ok: true };
+      }
+
+      function addOnce(el, ev, fn) {
+        if (!el) return;
+        el.removeEventListener(ev, fn);
+        el.addEventListener(ev, fn);
+      }
+
+      addOnce(nextBtn, "click", function (evt) {
+        evt.preventDefault();
+        const v = validateStep(cur);
+        if (!v.ok) { alert(v.msg); return; }
+        if (cur < steps.length - 1) cur++;
+        showStep(cur);
+        saveDraftLocal();
+      });
+
+      addOnce(prevBtn, "click", function (evt) {
+        evt.preventDefault();
+        if (cur > 0) cur--;
+        showStep(cur);
+      });
+
+      addOnce(saveDraftBtn, "click", function () {
+        saveDraftLocal();
+        alert("Draft saved locally.");
+      });
+
+      function collectFormValues() {
+        const fd = {};
+        const els = form.querySelectorAll("input, select, textarea");
+        for (const el of els) {
+          if (el.type === "file") continue;
+          if (el.type === "checkbox") fd[el.name || el.id] = el.checked;
+          else fd[el.name || el.id] = el.value;
+        }
+        return fd;
+      }
+
+      function saveDraftLocal() {
+        try {
+          const data = collectFormValues();
+          localStorage.setItem("mba_eval_draft_v1", JSON.stringify(data));
+          console.log("Draft saved.");
+        } catch (err) { console.warn("Draft save failed", err); }
+      }
+
+      (function loadDraft() {
+        try {
+          const raw = localStorage.getItem("mba_eval_draft_v1");
+          if (!raw) return;
+          const data = JSON.parse(raw);
+          for (const k in data) {
+            const el = form.querySelector('[name="' + k + '"], #' + k);
+            if (!el) continue;
+            if (el.type === "checkbox") el.checked = !!data[k];
+            else el.value = data[k];
+          }
+          console.log("Draft loaded.");
+        } catch (err) { console.warn("Draft load failed", err); }
+      })();
+
+      addOnce(form, "submit", function (e) {
+        e.preventDefault();
+        const v = validateStep(cur);
+        if (!v.ok) { alert(v.msg); return; }
+
+        const get = id => { const el = document.getElementById(id); return el ? el.value : ""; };
+
+        const payloadForScore = {
+          program: get("program"),
+          education: get("education"),
+          years: Number(get("years") || 0),
+          pubs: Number(get("publications") || 0),
+          cites: Number(get("citations") || 0),
+          awards: Number(get("awards") || 0),
+          summary: get("summary"),
+          project: get("project")
+        };
+
+        const score = computeScore(payloadForScore);
+        const programGuess = buildProgramGuess(score);
+        const recommendations = buildRecommendations(payloadForScore, score);
+
+        const fileNames = id => {
+          const el = document.getElementById(id);
+          if (!el || !el.files) return [];
+          return Array.from(el.files).map(f => f.name);
+        };
+
+        const payload = {
+          score, programGuess,
+          profile: {
+            fullName: get("fullName"), email: get("email"),
+            country: get("country"), educationLevel: get("education"),
+            yearsExperience: Number(get("years") || 0), summary: get("summary"),
+            targetProgram: get("program"), currentPosition: get("currentPosition")
+          },
+          metrics: { pubs: Number(get("publications") || 0), cites: Number(get("citations") || 0), awards: Number(get("awards") || 0) },
+          project: { sector: get("sector"), location: get("location"), targetBeneficiaries: get("targetBeneficiaries"), summary: get("project") },
+          files: { cv: fileNames("cvFile"), others: fileNames("otherFiles") },
+          recommendations, lang: "en", submittedAt: new Date().toISOString()
+        };
+
+        try {
+          localStorage.setItem("mba_eval_result_v1", JSON.stringify(payload));
+          localStorage.removeItem("mba_eval_draft_v1");
+          console.log("[EVAL-EN] Stored:", payload);
+        } catch (err) {
+          console.warn("Unable to write to localStorage:", err);
+          alert("Unable to save locally - check browser settings.");
+          return;
+        }
+
+        window.location.href = "/en/evaluation-report.html".replace("//","/"); // adjust if evaluation-report exists under /en/
+      });
+
+      showStep(cur);
+      const yearEl = document.getElementById("year"); if (yearEl) yearEl.textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>

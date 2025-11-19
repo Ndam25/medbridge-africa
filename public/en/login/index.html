@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — MedBridge Africa</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="alternate" hreflang="fr" href="https://medbridge-africa.netlify.app/login" />
+  <link rel="alternate" hreflang="en" href="https://medbridge-africa.netlify.app/en/login" />
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-4xl mx-auto flex items-center justify-between p-4">
+      <a href="/en/" class="font-bold text-lg">MedBridge Africa</a>
+      <nav class="space-x-4 text-sm">
+        <a href="/en/" class="hover:underline">Home</a>
+        <a href="/en/services" class="hover:underline">Services</a>
+        <a href="/en/evaluation" class="hover:underline">Evaluation</a>
+        <a href="/en/login" class="hover:underline font-semibold">Login</a>
+        <a href="/en/contact" class="hover:underline">Contact</a>
+        <a href="/en/about" class="hover:underline">About</a>
+        <a href="/login" class="ml-3 px-2 py-1 border rounded">FR</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">Login</h1>
+    <form action="/en/dashboard" method="post" class="space-y-4">
+      <div>
+        <label class="block text-sm">Email</label>
+        <input name="email" type="email" required class="w-full p-2 border rounded" />
+      </div>
+      <div>
+        <label class="block text-sm">Password</label>
+        <input name="password" type="password" required class="w-full p-2 border rounded" />
+      </div>
+      <div class="flex items-center justify-between">
+        <a href="/en/forgot-password" class="text-sm text-blue-600">Forgot password?</a>
+        <button type="submit" class="btn-primary">Login</button>
+      </div>
+    </form>
+
+    <p class="mt-4 text-sm">Don't have an account? <a href="/en/contact" class="text-blue-600">Contact us</a> to start.</p>
+  </main>
+
+  <footer class="text-center text-sm text-gray-500 p-6">
+    <div>© <span id="year">2025</span> MedBridge Africa — All rights reserved.</div>
+    <div class="mt-2"><a href="/login" class="text-blue-600">French version</a></div>
+  </footer>
+  <script>document.getElementById('year')?.textContent = new Date().getFullYear();</script>
+</body>
+</html>
